@@ -39,7 +39,9 @@ theme:
     scheme: default
     primary: custom
     accent: custom
-  custom_dir: docs/overrides
+  # Theme overrides live OUTSIDE docs/ so that template source is not copied
+  # into the published site by the static-file copy step.
+  custom_dir: overrides
 
   font:
     text: Roboto
