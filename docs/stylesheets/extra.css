@@ -1,0 +1,845 @@
+/* ==========================================================================
+   CIRQUA Technical Documentation - Visual system
+   --------------------------------------------------------------------------
+   LIGHT ONLY. Blue principal accent.
+
+   Brand palette
+     --wl-blue-deep    #072A92   WattLab deep blue  (headers, primary accents)
+     --wl-blue         #4A90E2   WattLab light blue (secondary accents, icons)
+     --wl-navy         #0A051B   near-black navy    (body text, code surfaces)
+     --wl-ink          #171717   neutral near-black (alt text)
+
+   Rules honoured here
+     - No dark theme, no theme toggle, no automatic dark mode.
+     - Contrast ratios meet WCAG AA for all text.
+     - Status is never conveyed by colour alone (badge text always present).
+   ========================================================================== */
+
+:root {
+  /* --- WattLab blue brand family ------------------------------------- */
+  --cirqua-blue-deep: #072a92;
+  --cirqua-blue: #4a90e2;
+  --cirqua-blue-soft: #eaf2fd;
+  --cirqua-blue-line: #c9dcf7;
+  --cirqua-navy: #0a051b;
+  --cirqua-ink: #171717;
+
+  /* --- Neutral surfaces (restrained, cool gray) --------------------- */
+  --cirqua-white: #ffffff;
+  --cirqua-surface: #f7f9fc;
+  --cirqua-surface-2: #eef3fa;
+  --cirqua-border: #d6e0ee;
+  --cirqua-border-soft: #e6ecf5;
+
+  /* --- Material for MkDocs bindings --------------------------------- */
+  --md-primary-fg-color: var(--cirqua-blue-deep);
+  --md-primary-fg-color--light: #2b52c4;
+  --md-primary-fg-color--dark: #041c66;
+  --md-primary-bg-color: #ffffff;
+  --md-primary-bg-color--light: #ffffffb3;
+
+  --md-accent-fg-color: #1a5fc4;
+  --md-accent-fg-color--transparent: #1a5fc41a;
+
+  --md-default-bg-color: var(--cirqua-white);
+  --md-default-fg-color: var(--cirqua-ink);
+  --md-default-fg-color--light: #45566b;
+  --md-default-fg-color--lighter: #64748b;
+  --md-default-fg-color--lightest: #94a3b8;
+
+  --md-code-fg-color: #1f2937;
+  --md-code-bg-color: #f4f7fb;
+  --md-code-border-color: var(--cirqua-border);
+
+  --md-typeset-a-color: #1257b8;
+  --md-typeset-a-color--light: #1a5fc4;
+  --md-mark-color: #cfe2ff;
+
+  --md-typeset-table-color: var(--cirqua-border);
+  --md-typeset-table-head-color: var(--cirqua-surface-2);
+  --md-typeset-table-stripe-color: var(--cirqua-surface);
+
+  --md-admonition-bg-color: var(--cirqua-surface);
+  --md-admonition-border-color: var(--cirqua-blue-line);
+  --md-admonition-icon-color: var(--cirqua-blue-deep);
+
+  --md-footer-bg-color: var(--cirqua-blue-deep);
+  --md-footer-bg-color--dark: #041c66;
+  --md-footer-fg-color: #e8f0ff;
+  --md-footer-fg-color--light: #b9cdef;
+  --md-footer-link-color: #ffffff;
+
+  /* --- Semantic colours (WCAG AA on white) -------------------------- */
+  --cirqua-ok: #17663a;
+  --cirqua-warn: #8a5200;
+  --cirqua-err: #a41f24;
+  --cirqua-info: #1257b8;
+
+  /* --- Typography --------------------------------------------------- */
+  --cirqua-font: Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Helvetica, Arial, sans-serif;
+  --cirqua-mono: 'Roboto Mono', 'SFMono-Regular', Consolas, 'Liberation Mono',
+    monospace;
+
+  --cirqua-radius: 6px;
+  --cirqua-radius-lg: 10px;
+  --cirqua-shadow: 0 1px 2px rgba(10, 5, 27, 0.06),
+    0 4px 12px rgba(10, 5, 27, 0.05);
+  --cirqua-shadow-hover: 0 2px 4px rgba(10, 5, 27, 0.08),
+    0 10px 24px rgba(7, 42, 146, 0.1);
+
+  /* --- Layout ------------------------------------------------------- */
+  --cirqua-header-h: 3.6rem;
+  --cirqua-content-max: 60rem;
+}
+
+/* ==========================================================================
+   Base typography
+   ========================================================================== */
+
+body {
+  color: var(--cirqua-ink);
+  font-family: var(--cirqua-font);
+  -webkit-font-smoothing: antialiased;
+}
+
+.md-typeset {
+  font-size: 0.82rem;
+  line-height: 1.65;
+}
+
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-typeset h4,
+.md-typeset h5,
+.md-typeset h6 {
+  color: var(--cirqua-blue-deep);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+
+.md-typeset h1 {
+  font-size: 1.9rem;
+  margin-bottom: 0.4rem;
+}
+
+.md-typeset h2 {
+  font-size: 1.4rem;
+  margin-top: 2rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--cirqua-border-soft);
+}
+
+.md-typeset h3 {
+  font-size: 1.1rem;
+  margin-top: 1.5rem;
+}
+
+.md-typeset h4 {
+  font-size: 0.95rem;
+  margin-top: 1.2rem;
+}
+
+.md-typeset strong {
+  color: var(--cirqua-blue-deep);
+}
+
+/* ==========================================================================
+   Header - CIRQUA / WattLab / ABC identity band
+   ========================================================================== */
+
+.md-header {
+  background: var(--cirqua-white);
+  border-bottom: 1px solid var(--cirqua-border);
+  box-shadow: 0 1px 3px rgba(10, 5, 27, 0.05);
+}
+
+.md-header__inner {
+  max-width: 88rem;
+  margin: 0 auto;
+}
+
+.md-header__topic {
+  font-weight: 700;
+  color: var(--cirqua-blue-deep);
+  font-size: 0.92rem;
+  line-height: 1.2;
+}
+
+/* The masthead inserted by overrides/partials/header.html */
+.cirqua-masthead {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  min-width: 0;
+}
+
+.cirqua-masthead__primary {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 0;
+}
+
+.cirqua-masthead__brand {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+
+.cirqua-masthead__title {
+  font-weight: 700;
+  font-size: 0.86rem;
+  color: var(--cirqua-blue-deep);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.25;
+}
+
+.cirqua-masthead__subtitle {
+  font-size: 0.6rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--cirqua-blue);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cirqua-masthead__logos {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.cirqua-masthead__logo {
+  height: 1.65rem;
+  width: auto;
+  max-width: 6rem;
+  object-fit: contain;
+  display: block;
+}
+
+.cirqua-masthead__logo--square {
+  height: 1.75rem;
+  width: 1.75rem;
+  border-radius: 4px;
+}
+
+.cirqua-masthead__logo--dark {
+  border-radius: 4px;
+  background: var(--cirqua-navy);
+}
+
+.cirqua-masthead__rule {
+  width: 1px;
+  height: 1.5rem;
+  background: var(--cirqua-border);
+}
+
+@media screen and (max-width: 76.1875em) {
+  .cirqua-masthead__subtitle {
+    display: none;
+  }
+  .cirqua-masthead__logo {
+    max-width: 4.4rem;
+  }
+}
+
+@media screen and (max-width: 44.9844em) {
+  .md-header__topic {
+    display: none;
+  }
+  .cirqua-masthead__title {
+    font-size: 0.78rem;
+  }
+  .cirqua-masthead__logo {
+    max-width: 3.4rem;
+    height: 1.35rem;
+  }
+  .cirqua-masthead__logo--square {
+    height: 1.35rem;
+    width: 1.35rem;
+  }
+  .cirqua-masthead__rule {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   Navigation tabs
+   ========================================================================== */
+
+.md-tabs {
+  background: var(--cirqua-white);
+  border-bottom: 1px solid var(--cirqua-border);
+}
+
+.md-tabs__link {
+  color: var(--cirqua-default-fg-color, #45566b);
+  font-weight: 600;
+  font-size: 0.72rem;
+}
+
+.md-tabs__link--active {
+  color: var(--cirqua-blue-deep);
+  box-shadow: inset 0 -3px 0 var(--cirqua-blue);
+}
+
+.md-tabs__link:hover {
+  color: var(--cirqua-blue);
+}
+
+/* ==========================================================================
+   Content card used for homepage node/sensor navigation
+   ========================================================================== */
+
+.cirqua-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 0.85rem;
+  margin: 1.25rem 0 1.75rem;
+}
+
+.cirqua-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.9rem 1rem;
+  background: var(--cirqua-white);
+  border: 1px solid var(--cirqua-border);
+  border-left: 3px solid var(--cirqua-blue);
+  border-radius: var(--cirqua-radius);
+  box-shadow: var(--cirqua-shadow);
+  color: inherit;
+  transition: box-shadow 0.18s ease, transform 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.cirqua-card:hover {
+  box-shadow: var(--cirqua-shadow-hover);
+  transform: translateY(-2px);
+  border-color: var(--cirqua-blue-line);
+  border-left-color: var(--cirqua-blue-deep);
+}
+
+.cirqua-card__title {
+  font-weight: 700;
+  color: var(--cirqua-blue-deep);
+  font-size: 0.92rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.cirqua-card__body {
+  font-size: 0.74rem;
+  color: var(--cirqua-default-fg-color, #45566b);
+  line-height: 1.5;
+}
+
+.cirqua-card__meta {
+  font-size: 0.64rem;
+  color: var(--cirqua-blue);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  margin-top: auto;
+  padding-top: 0.35rem;
+  text-transform: uppercase;
+}
+
+/* Card label / hint / strong variants used on the homepage grid.
+   Kept alongside __title/__body/__meta so either authoring style renders
+   consistently. */
+.cirqua-card__label {
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--cirqua-blue);
+}
+
+.cirqua-card strong,
+.cirqua-card__title {
+  font-weight: 700;
+  color: var(--cirqua-blue-deep);
+  font-size: 0.92rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.cirqua-card__hint,
+.cirqua-card__body {
+  font-size: 0.74rem;
+  color: var(--cirqua-default-fg-color, #45566b);
+  line-height: 1.5;
+}
+
+a.cirqua-card {
+  text-decoration: none;
+}
+
+/* ==========================================================================
+   Status badges - text always present, never colour-only
+   ========================================================================== */
+
+.cirqua-badge {
+  display: inline-block;
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: 1px solid currentColor;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.cirqua-badge--current {
+  color: var(--cirqua-ok);
+  background: #e9f6ee;
+}
+.cirqua-badge--variant {
+  color: var(--cirqua-info);
+  background: var(--cirqua-blue-soft);
+}
+.cirqua-badge--verified {
+  color: var(--cirqua-info);
+  background: var(--cirqua-blue-soft);
+}
+.cirqua-badge--planned {
+  color: #5b4a00;
+  background: #fdf6dd;
+}
+.cirqua-badge--historical {
+  color: #6b3f00;
+  background: #fdeede;
+}
+.cirqua-badge--unknown {
+  color: var(--cirqua-default-fg-color-lighter, #64748b);
+  background: var(--cirqua-surface-2);
+}
+
+/* ==========================================================================
+   Node identity header block (field-service pages)
+   ========================================================================== */
+
+.cirqua-identity {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 0.6rem;
+  margin: 1rem 0 1.5rem;
+  padding: 0.9rem 1rem;
+  background: var(--cirqua-surface);
+  border: 1px solid var(--cirqua-border);
+  border-radius: var(--cirqua-radius);
+}
+
+.cirqua-identity__item {
+  min-width: 0;
+}
+
+/* Key/value row form used on the homepage status block. */
+.cirqua-identity__row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+  padding: 0.3rem 0;
+  border-bottom: 1px solid var(--cirqua-border-soft);
+}
+
+.cirqua-identity__row:last-child {
+  border-bottom: none;
+}
+
+.cirqua-identity__key {
+  display: block;
+  font-size: 0.6rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--cirqua-default-fg-color-lighter, #64748b);
+  font-weight: 700;
+}
+
+.cirqua-identity__label {
+  display: block;
+  font-size: 0.6rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--cirqua-default-fg-color-lighter, #64748b);
+  font-weight: 700;
+}
+
+.cirqua-identity__value {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--cirqua-ink);
+  word-break: break-word;
+}
+
+.cirqua-identity__value code {
+  background: none;
+  padding: 0;
+  font-size: 0.76rem;
+}
+
+/* ==========================================================================
+   Provenance / source-attribution block for code snippets
+   ========================================================================== */
+
+.cirqua-source {
+  font-size: 0.68rem;
+  color: var(--cirqua-default-fg-color-light, #45566b);
+  background: var(--cirqua-surface);
+  border: 1px solid var(--cirqua-border-soft);
+  border-left: 3px solid var(--cirqua-blue-line);
+  border-radius: var(--cirqua-radius);
+  padding: 0.5rem 0.75rem;
+  margin: 0.35rem 0 1.1rem;
+}
+
+.cirqua-source__label {
+  font-weight: 700;
+  color: var(--cirqua-blue-deep);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.6rem;
+}
+
+.cirqua-source code {
+  background: none;
+  padding: 0;
+  font-size: 0.68rem;
+  word-break: break-all;
+}
+
+/* ==========================================================================
+   QR code presentation (field service)
+   ========================================================================== */
+
+.cirqua-qr {
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+.cirqua-qr img,
+.cirqua-qr__image {
+  max-width: 15rem;
+  height: auto;
+  border: 1px solid var(--cirqua-border);
+  border-radius: var(--cirqua-radius);
+  padding: 0.6rem;
+  background: var(--cirqua-white);
+}
+
+.cirqua-qr__caption {
+  font-size: 0.7rem;
+  color: var(--cirqua-default-fg-color-light, #45566b);
+  margin-top: 0.5rem;
+}
+
+/* Printable node label - A6-ish card layout */
+.cirqua-label {
+  display: inline-block;
+  width: 3.4in;
+  padding: 0.22in;
+  border: 2px solid var(--cirqua-blue-deep);
+  border-radius: 8px;
+  background: var(--cirqua-white);
+  text-align: center;
+  margin: 0.5rem 0.75rem 0.5rem 0;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+.cirqua-label__brand {
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  font-size: 0.72rem;
+  color: var(--cirqua-blue-deep);
+  text-transform: uppercase;
+}
+
+.cirqua-label__node {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--cirqua-navy);
+  margin: 0.1rem 0 0.4rem;
+  line-height: 1.1;
+}
+
+.cirqua-label__qr {
+  width: 2.3in;
+  height: 2.3in;
+  display: block;
+  margin: 0 auto;
+}
+
+.cirqua-label__hint {
+  font-size: 0.62rem;
+  color: var(--cirqua-default-fg-color-light, #45566b);
+  margin-top: 0.4rem;
+}
+
+.cirqua-label__foot {
+  margin-top: 0.45rem;
+  padding-top: 0.35rem;
+  border-top: 1px solid var(--cirqua-border);
+  font-size: 0.55rem;
+  letter-spacing: 0.05em;
+  color: var(--cirqua-default-fg-color-lighter, #64748b);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   Tables
+   ========================================================================== */
+
+.md-typeset table:not([class]) {
+  border: 1px solid var(--cirqua-border);
+  border-radius: var(--cirqua-radius);
+  overflow: hidden;
+  font-size: 0.72rem;
+  display: table;
+  width: 100%;
+}
+
+.md-typeset table:not([class]) th {
+  background: var(--cirqua-blue-deep);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.68rem;
+  letter-spacing: 0.02em;
+}
+
+.md-typeset table:not([class]) th,
+.md-typeset table:not([class]) td {
+  padding: 0.42rem 0.6rem;
+}
+
+.md-typeset table:not([class]) tbody tr:nth-child(odd) {
+  background: var(--cirqua-surface);
+}
+
+/* Wide engineering tables scroll horizontally on phones instead of
+   breaking the layout. */
+.md-typeset .table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ==========================================================================
+   Code blocks
+   ========================================================================== */
+
+.md-typeset pre > code {
+  font-size: 0.68rem;
+  line-height: 1.55;
+}
+
+.md-typeset code {
+  font-family: var(--cirqua-mono);
+  background: var(--cirqua-code-bg-color);
+  color: var(--cirqua-code-fg-color);
+  border-radius: 3px;
+}
+
+.md-typeset .highlight > pre {
+  border: 1px solid var(--cirqua-border);
+  border-radius: var(--cirqua-radius);
+  background: var(--cirqua-code-bg-color);
+}
+
+/* ==========================================================================
+   Admonitions
+   ========================================================================== */
+
+.md-typeset .admonition,
+.md-typeset details {
+  border-radius: var(--cirqua-radius);
+  box-shadow: none;
+  font-size: 0.74rem;
+}
+
+.md-typeset .admonition > .admonition-title,
+.md-typeset details > summary {
+  font-weight: 700;
+}
+
+.md-typeset .admonition.tip,
+.md-typeset .admonition.tip > .admonition-title {
+  --md-admonition-icon-color: var(--cirqua-ok);
+}
+.md-typeset .admonition.warning,
+.md-typeset .admonition.warning > .admonition-title {
+  --md-admonition-icon-color: var(--cirqua-warn);
+}
+.md-typeset .admonition.danger,
+.md-typeset .admonition.danger > .admonition-title {
+  --md-admonition-icon-color: var(--cirqua-err);
+}
+.md-typeset .admonition.info,
+.md-typeset .admonition.info > .admonition-title {
+  --md-admonition-icon-color: var(--cirqua-info);
+}
+
+/* ==========================================================================
+   Mermaid diagrams - align and constrain
+   ========================================================================== */
+
+.mermaid {
+  text-align: center;
+  margin: 1.25rem 0;
+  font-size: 0.78rem;
+}
+
+/* ==========================================================================
+   Search
+   ========================================================================== */
+
+.md-search__input {
+  border-radius: 999px;
+  background: var(--cirqua-surface);
+  border: 1px solid var(--cirqua-border);
+}
+
+.md-search__input:focus {
+  border-color: var(--cirqua-blue);
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.18);
+}
+
+.md-search__form {
+  padding: 0.2rem 0;
+}
+
+/* ==========================================================================
+   Scrollbars
+   ========================================================================== */
+
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+::-webkit-scrollbar-track {
+  background: var(--cirqua-surface);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--cirqua-border);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--cirqua-blue-line);
+}
+
+/* ==========================================================================
+   Print - technician may print a node page
+   ========================================================================== */
+
+@media print {
+  .md-header,
+  .md-tabs,
+  .md-sidebar,
+  .md-footer,
+  .md-search,
+  .md-top,
+  .md-typeset .md-button,
+  .cirqua-card__meta {
+    display: none !important;
+  }
+
+  body,
+  .md-content {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .md-content {
+    max-width: none !important;
+    padding: 0 0.4in;
+  }
+
+  .md-typeset h1,
+  .md-typeset h2,
+  .md-typeset h3 {
+    color: #000000 !important;
+    page-break-after: avoid;
+  }
+
+  .md-typeset pre,
+  .md-typeset table:not([class]),
+  .cirqua-identity,
+  .cirqua-source,
+  .cirqua-label {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    box-shadow: none !important;
+    border: 1px solid #999999 !important;
+  }
+
+  a[href^='http']::after {
+    content: ' <' attr(href) '>';
+    font-size: 0.6rem;
+    color: #555555;
+    word-break: break-all;
+  }
+
+  .cirqua-label {
+    width: auto;
+    margin: 0;
+  }
+}
+
+/* ==========================================================================
+   Reduced-motion preference
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .cirqua-card:hover {
+    transform: none;
+  }
+}
+
+/* ==========================================================================
+   Accessibility - visible focus for keyboard users
+   ========================================================================== */
+
+.md-typeset a:focus-visible,
+.cirqua-card:focus-visible,
+.md-typeset summary:focus-visible {
+  outline: 2px solid var(--cirqua-blue);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+.cirqua-skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  background: var(--cirqua-blue-deep);
+  color: #ffffff;
+  padding: 0.5rem 0.9rem;
+  border-radius: 0 0 var(--cirqua-radius) 0;
+  font-weight: 700;
+}
+
+.cirqua-skip-link:focus {
+  left: 0;
+}

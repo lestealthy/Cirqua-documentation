@@ -1,0 +1,257 @@
+# ===========================================================================
+# CIRQUA Technical Documentation - MkDocs configuration
+#
+# Follows the WattLab documentation standard (general_rules):
+#   - site_url / repo_url / repo_name always set, never placeholders
+#   - use_directory_urls: false  (prevents GitHub Pages redirect loops)
+#   - Roboto / Roboto Mono typography
+#
+# Deliberate deviations from the generic WattLab template, mandated by the
+# CIRQUA brand direction:
+#   - LIGHT ONLY. A single `default` scheme, no slate, no toggle.
+#   - Blue principal accent (WattLab blue family).
+# ===========================================================================
+
+site_name: CIRQUA Technical Documentation
+site_description: >-
+  Embedded monitoring and instrumentation platform documentation for the
+  CIRQUA Waterwise Futures initiative - nodes, sensors, firmware, calibration
+  and field service.
+site_author: WattLab Engineering
+site_url: https://lestealthy.github.io/Cirqua-documentation/
+repo_url: https://github.com/lestealthy/Cirqua-documentation
+repo_name: Cirqua-documentation
+copyright: >-
+  Documentation by WattLab Engineering for the CIRQUA Waterwise Futures
+  initiative. CIRQUA is a Horizon Europe funded project. CIRQUA and
+  African Biotechnology Company names and marks belong to their respective
+  owners.
+
+# CRITICAL - WattLab standard. Prevents redirect loops on GitHub Pages
+# subdirectory deployments and gives stable, QR-friendly flat URLs
+# (e.g. /nodes/node1.html).
+use_directory_urls: false
+
+theme:
+  name: material
+  # LIGHT ONLY - single scheme, no dark theme, no toggle.
+  palette:
+    scheme: default
+    primary: custom
+    accent: custom
+  custom_dir: docs/overrides
+
+  font:
+    text: Roboto
+    code: Roboto Mono
+
+  icon:
+    logo: material/water
+    repo: fontawesome/brands/github
+
+  favicon: assets/branding/cirqua/favicon.png
+
+  features:
+    - navigation.sections
+    - navigation.top
+    - navigation.tracking
+    - navigation.indexes
+    - navigation.expand
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+    - content.tooltips
+    - content.tabs.link
+    - content.action.edit
+
+plugins:
+  - search
+  - minify:
+      minify_html: true
+      minify_js: true
+      minify_css: true
+      htmlmin_opts:
+        remove_comments: true
+  - git-revision-date:
+      enabled: !ENV [CI, false]
+      type: date
+      strict: false
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - footnotes
+  - def_list
+  - abbr
+  - toc:
+      permalink: true
+      permalink_title: Anchor link to this section
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  # Snippets are pre-extracted into docs/assets/snippets/ by
+  # scripts/extract_code_snippets.py so that the firmware tree outside
+  # docs/ is never required at build time.
+  #
+  # base_path is pinned to docs/ because pymdownx.snippets otherwise resolves
+  # an embed relative to the directory of the page that includes it, which
+  # would break the shared "assets/snippets/<id>.cpp" convention used by every
+  # page regardless of depth.
+  - pymdownx.snippets:
+      base_path:
+        - !relative $config_dir/docs
+      check_paths: true
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.keys
+
+extra_css:
+  - stylesheets/extra.css
+  - stylesheets/footer.css
+
+extra_javascript:
+  - javascripts/extra.js
+
+extra:
+  generator: false
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/lestealthy/Cirqua-documentation
+      name: CIRQUA documentation source
+    - icon: fontawesome/brands/github
+      link: https://github.com/lestealthy/Cirqua
+      name: CIRQUA firmware repository
+    - icon: material/water
+      link: https://cirqua-water.eu/
+      name: CIRQUA official project site
+  cirqua:
+    firmware_repository: https://github.com/lestealthy/Cirqua
+    firmware_commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+    firmware_commit_short: db6d9b8
+    documentation_repository: https://github.com/lestealthy/Cirqua-documentation
+    official_project_site: https://cirqua-water.eu/
+    partner_organisation: https://www.african-biotech.com/
+
+nav:
+  - Home: index.md
+
+  - Project:
+      - project/index.md
+      - Overview: project/overview.md
+      - Objectives: project/objectives.md
+      - System Context: project/system-context.md
+      - Terminology: project/terminology.md
+
+  - Architecture:
+      - architecture/index.md
+      - System Architecture: architecture/system-architecture.md
+      - Node Topology: architecture/node-topology.md
+      - Data Flow: architecture/data-flow.md
+      - Communications: architecture/communications.md
+      - Timing: architecture/timing.md
+
+  - Nodes:
+      - nodes/index.md
+      - Node 1 - Collection Tank A: nodes/node1.md
+      - Node 2 - Water Telemetry: nodes/node2.md
+      - Node 3 - Flow Metering: nodes/node3.md
+      - Node 4 - Effluent Analytics: nodes/node4.md
+      - Node 4 SMTP - E-mail Alerting: nodes/node4-smtp.md
+
+  - Hardware:
+      - hardware/index.md
+      - Controllers: hardware/controllers.md
+      - GPIO Map: hardware/gpio-map.md
+      - Power: hardware/power.md
+      - Wiring: hardware/wiring.md
+      - Enclosures: hardware/enclosures.md
+
+  - Sensors:
+      - sensors/index.md
+      - Ultrasonic Level: sensors/ultrasonic.md
+      - Water Temperature: sensors/temperature.md
+      - Dissolved Oxygen: sensors/dissolved-oxygen.md
+      - Flow Rate: sensors/flow.md
+      - pH: sensors/ph.md
+      - Turbidity: sensors/turbidity.md
+      - Conductivity: sensors/conductivity.md
+      - Humidity & Ambient: sensors/humidity.md
+
+  - Firmware:
+      - firmware/index.md
+      - Repository: firmware/repository.md
+      - Source Map: firmware/source-map.md
+      - Build: firmware/build.md
+      - Flashing: firmware/flashing.md
+      - Calibration Console: firmware/configuration.md
+      - Code Reference: firmware/code-reference.md
+      - Revision History: firmware/revision-history.md
+
+  - RTOS:
+      - rtos/index.md
+      - Tasks: rtos/tasks.md
+      - Queues & Buffers: rtos/queues.md
+      - Synchronisation: rtos/synchronisation.md
+      - Scheduling: rtos/scheduling.md
+
+  - Communication:
+      - communication/index.md
+      - Serial Links: communication/serial-links.md
+      - Message Format: communication/message-format.md
+      - Fault Handling: communication/fault-handling.md
+
+  - Calibration:
+      - calibration/index.md
+      - Ultrasonic Volume: calibration/ultrasonic.md
+      - Dissolved Oxygen: calibration/dissolved-oxygen.md
+      - pH: calibration/ph.md
+      - Turbidity: calibration/turbidity.md
+      - Conductivity: calibration/conductivity.md
+
+  - Field Service:
+      - field-service/index.md
+      - Node Identification: field-service/node-identification.md
+      - Startup Checklist: field-service/startup-checklist.md
+      - Troubleshooting: field-service/troubleshooting.md
+      - Sensor Replacement: field-service/sensor-replacement.md
+      - Maintenance: field-service/maintenance.md
+      - QR Codes: field-service/qr-codes.md
+
+  - Validation:
+      - validation/index.md
+      - Test Strategy: validation/test-strategy.md
+      - Hardware Validation: validation/hardware-validation.md
+      - Firmware Validation: validation/firmware-validation.md
+      - Known Limitations: validation/known-limitations.md
+
+  - References:
+      - references/index.md
+      - Datasheets: references/datasheets.md
+      - Official Project Sources: references/official-project-sources.md
+      - Standards: references/standards.md
+      - Scientific Literature: references/scientific-literature.md
+      - Source Registry: references/source-registry.md
+
+  - Historical:
+      - historical/index.md
+      - Legacy Firmware: historical/legacy-firmware.md

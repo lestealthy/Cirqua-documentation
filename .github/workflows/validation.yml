@@ -1,0 +1,106 @@
+# ---------------------------------------------------------------------------
+# CIRQUA technical documentation - validation
+#
+# Runs the full correctness suite BEFORE any deployment is allowed to proceed.
+# This workflow never deploys; it only proves the documentation is sound.
+# ---------------------------------------------------------------------------
+name: Validate documentation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout documentation repository
+        uses: actions/checkout@v4
+
+      - name: Checkout firmware submodule
+        run: |
+          git submodule update --init --recursive
+          git -C _external/Cirqua-firmware rev-parse HEAD
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Verify submodule is initialised
+        run: |
+          test -d _external/Cirqua-firmware/FreeRTOS_Implementation
+          echo "Firmware submodule present."
+
+      - name: Regenerate code snippets from firmware
+        run: python scripts/extract_code_snippets.py
+
+      - name: Verify snippets are not stale
+        run: python scripts/extract_code_snippets.py --check
+
+      - name: Regenerate QR codes
+        run: python scripts/generate_qr_codes.py
+
+      - name: Verify QR codes are not stale
+        run: python scripts/generate_qr_codes.py --check
+
+      - name: Verify favicon is current
+        run: python scripts/generate_favicon.py --check
+
+      - name: Verify firmware manifest is current
+        run: python scripts/generate_source_manifest.py --check
+
+      - name: Verify internal link sources
+        run: python scripts/fix_internal_links.py --check
+
+      - name: Verify code provenance against the snippet index
+        run: python scripts/verify_provenance.py
+
+      - name: Documentation validation suite
+        run: python scripts/validate_docs.py
+
+      - name: Validate source registry structure
+        run: |
+          python - <<'PY'
+          import sys, yaml
+          data = yaml.safe_load(open("sources/sources.yml", encoding="utf-8"))
+          assert data["sources"], "source registry is empty"
+          ids = [s["id"] for s in data["sources"]]
+          assert len(ids) == len(set(ids)), f"duplicate source ids: {ids}"
+          required = {"id","title","publisher","source_type","url","accessed","used_for","authority","notes"}
+          for entry in data["sources"]:
+              missing = required - set(entry)
+              assert not missing, f"{entry['id']} missing {missing}"
+          print(f"source registry OK: {len(ids)} sources")
+          PY
+
+      - name: Strict MkDocs build
+        run: mkdocs build --strict --clean
+
+      - name: Upload site artifact for inspection
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: site/
+          retention-days: 7
+          if-no-files-found: ignore

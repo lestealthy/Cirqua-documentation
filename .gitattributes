@@ -1,0 +1,43 @@
+# ---------------------------------------------------------------------------
+# CIRQUA documentation repository - line ending and file mode policy
+#
+# The documentation is published from GitHub Actions on Linux while it is
+# authored primarily on Windows. Normalising text files prevents the whole
+# document set from churning between CRLF and LF on every commit.
+# ---------------------------------------------------------------------------
+
+# Default: treat text files as LF in the repository, check out natively.
+* text=auto eol=lf
+
+# Documentation sources
+*.md      text eol=lf
+*.yml     text eol=lf
+*.yaml    text eol=lf
+*.css     text eol=lf
+*.js      text eol=lf
+*.py      text eol=lf
+*.txt     text eol=lf
+*.cpp     text eol=lf
+*.ino     text eol=lf
+.gitignore    text eol=lf
+.gitattributes text eol=lf
+
+# Assets that must never be touched by line-ending conversion
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.woff  binary
+*.woff2 binary
+*.pdf   binary
+
+# SVG is text but must keep byte-identical line endings to stay faithful to
+# the official brand assets; do not renormalise.
+*.svg   text eol=lf
+
+# Lockfiles are generated
+*.lock  text eol=lf
+
+# Keep shell scripts executable.
+*.sh    text eol=lf

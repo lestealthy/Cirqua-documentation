@@ -1,0 +1,441 @@
+# CIRQUA documentation - source registry
+#
+# Machine-readable companion to docs/references/source-registry.md.
+#
+# Every external source that informs a technical claim in this documentation
+# MUST be recorded here. Claims are typed so a reader can tell a project fact
+# from a firmware fact, a manufacturer specification, an engineering
+# interpretation and a recommendation.
+#
+# authority levels
+#   primary  - the organisation's own authoritative material
+#   official - vendor documentation, standards body, RTOS/vendor reference
+#   academic - peer-reviewed or institutional literature
+#   community- non-authoritative; never allowed to override a manufacturer
+#
+# accessed dates are the day the source was retrieved and read.
+
+metadata:
+  project: CIRQUA Waterwise Futures
+  documentation_repository: https://github.com/lestealthy/Cirqua-documentation
+  documentation_revision: see repository history
+  firmware_repository: https://github.com/lestealthy/Cirqua
+  firmware_branch: main
+  firmware_commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  compiled: 2026-10-03
+  policy: >-
+    Claims that depend on external documentation must cite a source id from
+    this registry. Project-level claims use the CIRQUA official site.
+    Community sources never override manufacturer documentation.
+
+sources:
+  # ---------------------------------------------------------------------
+  # Official project sources
+  # ---------------------------------------------------------------------
+  - id: CIRQUA_OFFICIAL
+    title: CIRQUA Waterwise Futures (official project website)
+    publisher: CIRQUA project consortium
+    source_type: official_project
+    url: https://cirqua-water.eu/
+    accessed: '2026-10-03'
+    used_for:
+      - project identity and full project title
+      - Horizon Europe funding (4.09 million EUR)
+      - project duration (36 months, April 2024 to March 2027)
+      - consortium scale (13 partners, 10 countries, 3 continents)
+      - constructed wetlands and water reuse objectives
+      - mention of sensors and automation in operation
+      - Mediterranean field application context
+    authority: primary
+    notes: >-
+      Authoritative for all project-level claims. Project facts change over
+      time; re-verify duration, funding and consortium figures before any
+      publication or grant reporting.
+
+  - id: CIRQUA_THE_PROJECT
+    title: 'CIRQUA: The Project'
+    publisher: CIRQUA project consortium
+    source_type: official_project
+    url: https://cirqua-water.eu/the-project/
+    accessed: '2026-10-03'
+    used_for:
+      - central project objective
+      - nature-based solutions and constructed wetlands framing
+    authority: primary
+    notes: Same organisation as CIRQUA_OFFICIAL; kept separate by page.
+
+  - id: CIRQUA_WORK_PROGRAM
+    title: 'CIRQUA: Work Program'
+    publisher: CIRQUA project consortium
+    source_type: official_project
+    url: https://cirqua-water.eu/work-program/
+    accessed: '2026-10-03'
+    used_for:
+      - work package context for the instrumentation and automation work
+    authority: primary
+    notes: >-
+      Work-package numbering and scope are project-management material; the
+      instrumentation nodes must not be described as a specific work package
+      deliverable unless the consortium confirms it.
+
+  - id: CIRQUA_TEAM
+    title: 'CIRQUA: Team'
+    publisher: CIRQUA project consortium
+    source_type: official_project
+    url: https://cirqua-water.eu/team-2/
+    accessed: '2026-10-03'
+    used_for:
+      - consortium partner listing
+      - African Biotechnology Company listed as a CIRQUA partner
+    authority: primary
+    notes: >-
+      Used only to establish that ABC is a CIRQUA partner. It does not
+      define ABC's CIRQUA deliverables; those must come from the consortium.
+
+  - id: ABC_OFFICIAL
+    title: African Biotechnology Company (official website)
+    publisher: African Biotechnology Company (ABC), Tunis, Tunisia
+    source_type: official_organisation
+    url: https://www.african-biotech.com/
+    accessed: '2026-10-03'
+    used_for:
+      - ABC organisational context
+      - founded 2017 in Tunis, Tunisia
+      - service portfolio (scientific consulting, wastewater treatment plant
+        maintenance, product development and 3D printing, molecular biology)
+      - stated focus on smart irrigation, wastewater reuse and sustainable
+        agriculture
+      - ABC publicly lists the CIRQUA project among its projects
+    authority: primary
+    notes: >-
+      ABC's own site is the only source used for ABC organisational claims.
+      No CIRQUA deliverable responsibility is inferred beyond the fact of
+      partnership.
+
+  # ---------------------------------------------------------------------
+  # Hardware manufacturer sources
+  # ---------------------------------------------------------------------
+  - id: ESPRESSIF_ESP32
+    title: ESP32 Series SoCs
+    publisher: Espressif Systems
+    source_type: manufacturer
+    url: https://www.espressif.com/en/products/socs/esp32
+    accessed: '2026-10-03'
+    used_for:
+      - ESP32 as the controller on all four CIRQUA nodes
+      - dual-core operation underpinning the FreeRTOS core-pinning scheme
+      - ADC characteristics, 12-bit resolution and configurable attenuation
+      - ADC1/ADC2 channel grouping, relevant to Wi-Fi coexistence on the
+        Node 4 SMTP variant
+      - strapping pins and boot considerations for flashing
+    authority: official
+    notes: >-
+      The exact board variant and module used by CIRQUA are NOT stated in the
+      firmware repository. Any board-specific claim remains unverified.
+
+  - id: ESPRESSIF_ARDUINO_ESP32
+    title: 'Arduino-ESP32 core documentation'
+    publisher: Espressif Systems
+    source_type: manufacturer
+    url: https://docs.espressif.com/projects/arduino-esp32/en/latest/
+    accessed: '2026-10-03'
+    used_for:
+      - xTaskCreatePinnedToCore, HardwareSerial, Preferences (NVS)
+      - analogSetPinAttenuation, analogReadMilliVolts, analogReadResolution
+      - portMUX_TYPE and portENTER_CRITICAL critical sections
+      - ESP32_VREF of 3.3 V used in the ADC reasoning
+    authority: official
+    notes: >-
+      The core version used to compile the CIRQUA sketches is not pinned in
+      the repository and is therefore unverified.
+
+  - id: MAXIM_DS18B20
+    title: DS18B20 - Programmable Resolution 1-Wire Digital Thermometer
+    publisher: Analog Devices / Maxim Integrated
+    source_type: manufacturer
+    url: https://www.analog.com/en/products/ds18b20.html
+    accessed: '2026-10-03'
+    used_for:
+      - 1-Wire interface and addressable bus used by the water and submerged
+        temperature probes on Nodes 2 and 4
+      - conversion timing context for the 10-bit blocking conversion
+        (~187.5 ms) that Node 4 relies on
+      - programmable conversion resolution
+    authority: official
+    notes: >-
+      The firmware sets 10-bit resolution on Node 4 and uses the default
+      resolution on Node 2. Parasite power is not confirmed by the source.
+
+  - id: AOSONG_DHT11
+    title: DHT11 Digital Humidity and Temperature Sensor
+    publisher: Aosong Electronics
+    source_type: manufacturer
+    url: https://www.aosong.com/en/product-40.html
+    accessed: '2026-10-03'
+    used_for:
+      - single-wire digital ambient temperature and humidity sensing used on
+        Nodes 2 and 4
+      - slow sampling characteristics, consistent with the firmware pacing
+        DHT reads to at most one every 2000 ms
+    authority: official
+    notes: >-
+      DHT11 accuracy and long-term drift are inherently limited. No numeric
+      accuracy figure is asserted in this documentation.
+
+  - id: HC_SR04_GENERIC
+    title: HC-SR04 Ultrasonic Ranging Module (generic, widely cloned)
+    publisher: No single authoritative manufacturer
+    source_type: manufacturer
+    url: ''
+    accessed: '2026-10-03'
+    used_for:
+      - ultrasonic tank-level measurement on Nodes 1, 2 and 4
+      - the firmware's 0.0343 cm/us round-trip conversion constant
+    authority: official
+    notes: >-
+      The module is named in the firmware but is a generic design with many
+      incompatible clones and no canonical datasheet. Operating voltage,
+      ranging accuracy and minimum range are NOT asserted anywhere in this
+      documentation. Note the documented engineering risk that the Echo
+      output is a 5 V logic level driving a 3.3 V ESP32 pin.
+
+  - id: DFRobot_SEN0189
+    title: 'SEN0189 turbidity sensor (referenced by the CIRQUA firmware)'
+    publisher: DFRobot / Seeed Studio
+    source_type: manufacturer
+    url: ''
+    accessed: '2026-10-03'
+    used_for:
+      - the turbidity-to-voltage-to-NTU relationship implemented on Node 4
+        (ntu = -1120.4 V^2 + 5742.3 V - 4353.8)
+    authority: official
+    notes: >-
+      The firmware source comments attribute the relationship to "SEN0189 /
+      DFRobot". The exact product page could not be verified during
+      compilation of this documentation; the manufacturer datasheet must be
+      obtained and attached before the coefficient is relied upon for
+      quantitative work.
+
+  - id: SENSOR_PARTS_UNIDENTIFIED
+    title: Unidentified analogue sensor modules (DO, EC, pH, flow)
+    publisher: Unknown
+    source_type: manufacturer
+    url: ''
+    accessed: '2026-10-03'
+    used_for:
+      - recording the fact that these four sensor types have no part number,
+        manufacturer or datasheet recorded anywhere in the firmware repository
+    authority: official
+    notes: >-
+      The Node 2 dissolved oxygen module, Node 3 flow sensor and Node 4
+      pH and EC modules are referenced only by function. No specification,
+      accuracy, range or calibration certificate can be cited. This is a
+      documented gap, not an omission.
+
+  # ---------------------------------------------------------------------
+  # Software / RTOS sources
+  # ---------------------------------------------------------------------
+  - id: FREERTOS_KERNEL
+    title: FreeRTOS Kernel documentation
+    publisher: FreeRTOS
+    source_type: software
+    url: https://www.freertos.org/Documentation/RTOS_book.html
+    accessed: '2026-10-03'
+    used_for:
+      - task, mutex and scheduling semantics used across all four nodes
+      - vTaskDelayUntil periodic wake-up and priority behaviour
+      - vTaskDelete self-termination used in loop()
+      - mutex versus critical-section selection rationale
+    authority: official
+    notes: >-
+      FreeRTOS behaviour is described only where it explains CIRQUA's own
+      implementation. General RTOS theory is deliberately out of scope.
+
+  - id: ARDUINO_LIQUIDCRYSTAL_I2C
+    title: LiquidCrystal_I2C library
+    publisher: Arduino community (johnrickman)
+    source_type: software
+    url: https://github.com/johnrickman/LiquidCrystal_I2C
+    accessed: '2026-10-03'
+    used_for:
+      - the 16x4 character LCD at I2C address 0x27 on Nodes 1 and 4
+      - the lcd.command(0x80 | rowAddress) row addressing used on Node 4
+    authority: community
+    notes: >-
+      HD44780-compatible I2C backpack modules are used. Whether the fitted
+      backpack includes I2C pull-up resistors is NOT verified from the
+      hardware.
+
+  - id: ONEWIRE_LIBRARY
+    title: OneWire Arduino library
+    publisher: Paul Stoffregen
+    source_type: software
+    url: https://github.com/PaulStoffregen/OneWire
+    accessed: '2026-10-03'
+    used_for:
+      - the 1-Wire bus driver behind the DS18B20 probes on Nodes 2 and 4
+    authority: community
+    notes: Widely used and long-maintained, but not an official Dallas device library.
+
+  - id: DALLAS_TEMPERATURE_LIBRARY
+    title: DallasTemperature Arduino library
+    publisher: Miles Burton
+    source_type: software
+    url: https://github.com/MilesBurton/DallasTemperature
+    accessed: '2026-10-03'
+    used_for:
+      - getTempCByIndex, requestTemperatures, setResolution and
+        setWaitForConversion behaviour used on Nodes 2 and 4
+      - the DEVICE_DISCONNECTED_C sentinel used for fault detection
+    authority: community
+    notes: The library, not the datasheet, defines the non-blocking conversion pattern actually used.
+
+  - id: DHT_SENSOR_LIBRARY
+    title: DHT sensor library for Arduino
+    publisher: Adafruit
+    source_type: software
+    url: https://github.com/adafruit/DHT-sensor-library
+    accessed: '2026-10-03'
+    used_for:
+      - readTemperature and readHumidity, and the NaN return used as the
+        fault signal on Nodes 2 and 4
+    authority: community
+    notes: >-
+      The sketches include a DHT.h variant; the exact fork used at compile
+      time is not recorded in the firmware repository.
+
+  - id: MAIL_CLIENT_ESP32
+    title: Mail Client ESP32 (ESP Mail Client)
+    publisher: Mobivex
+    source_type: software
+    url: https://github.com/mobivex/Mail-Client-ESP32
+    accessed: '2026-10-03'
+    used_for:
+      - the SMTP transport, SSL session type and HTML message construction
+        used by the Node 4 SMTP variant
+      - smtp.errorReason() diagnostics reported over serial
+    authority: community
+    notes: >-
+      Used only by the Node 4 SMTP variant. Credentials are placeholders in
+      the committed source and must never be published.
+
+  - id: ESP32_PREFERENCES
+    title: ESP-IDF NVS / Arduino Preferences
+    publisher: Espressif Systems
+    source_type: software
+    url: https://docs.espressif.com/projects/arduino-esp32/en/latest/api/preferences.html
+    accessed: '2026-10-03'
+    used_for:
+      - non-volatile storage of pH slope, pH offset and EC K-factor in the
+        node4_cal namespace
+      - persistence of the SMTP heartbeat and error epochs in email_state
+    authority: official
+    notes: Calibration survives reflashing unless the NVS partition is erased.
+
+  - id: MKDOCS_MATERIAL
+    title: 'Material for MkDocs'
+    publisher: squidfunk
+    source_type: software
+    url: https://squidfunk.github.io/mkdocs-material/
+    accessed: '2026-10-03'
+    used_for:
+      - the theme, admonitions, content tabs, code annotations, Mermaid
+        support and search used to build this documentation site
+      - the flat URL behaviour configured with use_directory_urls: false
+    authority: official
+    notes: Pinned to mkdocs-material 9.7.7 in requirements.txt.
+
+  # ---------------------------------------------------------------------
+  # Standards
+  # ---------------------------------------------------------------------
+  - id: ISO_24512
+    title: 'ISO 24512: Water reuse - Guidelines for treated water usage and distribution'
+    publisher: International Organization for Standardization
+    source_type: standard
+    url: https://www.iso.org/standard/63345.html
+    accessed: '2026-10-03'
+    used_for:
+      - framing where the CIRQUA instrumentation sits relative to water
+        reuse quality management
+    authority: official
+    notes: >-
+      Referenced for context only. No conformance claim is made or tested by
+      the CIRQUA firmware.
+
+  - id: ISO_16061
+    title: 'ISO 16061: Irrigation controllers - Interface for electronic and electrical control devices'
+    publisher: International Organization for Standardization
+    source_type: standard
+    url: https://www.iso.org/standard/62403.html
+    accessed: '2026-10-03'
+    used_for:
+      - context for irrigation control interfaces relevant to CIRQUA water
+        reuse applications
+    authority: official
+    notes: Context only. The CIRQUA nodes do not implement this interface.
+
+  - id: EU_WFD
+    title: 'Directive 2000/60/EC - Water Framework Directive'
+    publisher: European Parliament and Council of the European Union
+    source_type: standard
+    url: https://eur-lex.europa.eu/eli/dir/2000/60/oj
+    accessed: '2026-10-03'
+    used_for:
+      - the EU legislative context the CIRQUA project describes itself as
+        supporting in the Mediterranean region
+    authority: official
+    notes: Context only. Not a product requirement.
+
+  # ---------------------------------------------------------------------
+  # Scientific literature (contextual)
+  # ---------------------------------------------------------------------
+  - id: LIT_CONSTRUCTED_WETLANDS
+    title: Constructed wetlands for wastewater treatment - foundational literature
+    publisher: Peer-reviewed literature (Vymazal; Kadlec and Wallace)
+    source_type: academic
+    url: https://doi.org/10.1007/s11273-005-3881-x
+    accessed: '2026-10-03'
+    used_for:
+      - general background on constructed wetlands as a nature-based
+        wastewater treatment technology, matching the CIRQUA project framing
+    authority: academic
+    notes: >-
+      Cited as background science for the project domain, not to justify any
+      specific firmware behaviour. Bibliographic details should be verified
+      against the publisher before formal citation.
+
+  - id: LIT_DO_SOLUBILITY
+    title: 'Dissolved oxygen solubility in water - temperature dependence'
+    publisher: Peer-reviewed / scientific literature
+    source_type: academic
+    url: ''
+    accessed: '2026-10-03'
+    used_for:
+      - explaining that the Node 2 dissolved oxygen temperature compensation
+        (-2 % per degree C, linear) is a coarse linear approximation of a
+        genuinely non-linear solubility relationship
+    authority: academic
+    notes: >-
+      No specific paper is asserted here. The documentation explains the
+      firmware's approximation on first principles and flags it as an
+      approximation without claiming a literature citation.
+
+  # ---------------------------------------------------------------------
+  # Engineering sources (internal, primary for technical facts)
+  # ---------------------------------------------------------------------
+  - id: CIRQUA_FIRMWARE
+    title: 'CIRQUA firmware (lestealthy/Cirqua)'
+    publisher: WattLab Engineering
+    source_type: source_code
+    url: https://github.com/lestealthy/Cirqua
+    accessed: '2026-10-03'
+    used_for:
+      - every GPIO assignment, task table, mutex, protocol frame, conversion
+        formula, calibration constant, LCD layout and timing value in this
+        documentation
+    authority: primary
+    notes: >-
+      Pinned at commit db6d9b896341a9c7d8fd01913e854b663c110d55 on branch
+      main, consumed through the _external/Cirqua-firmware submodule. The
+      FreeRTOS_Implementation tree is current; _OLD is historical and is
+      never treated as the current architecture.

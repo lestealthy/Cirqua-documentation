@@ -1,0 +1,68 @@
+# ---------------------------------------------------------------------------
+# CIRQUA documentation repository - ignore rules
+# Follows the WattLab documentation standard: build output and machine
+# specific artefacts must never be committed.
+# ---------------------------------------------------------------------------
+
+# --- MkDocs build output ---------------------------------------------------
+site/
+.cache/
+
+# --- Python ----------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+ENV/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# --- Generated documentation artefacts ------------------------------------
+# Generated files are committed deliberately so that GitHub Pages can be
+# served and the rendered site is reproducible without running scripts.
+# Local scratch output is ignored.
+docs/field-service/.qr-cache/
+
+# --- Editors / OS ----------------------------------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+$RECYCLE.BIN/
+
+# --- Windows ---------------------------------------------------------------
+Desktop.ini
+*.lnk
+
+# --- Logs / temporary ------------------------------------------------------
+*.log
+*.tmp
+*.temp
+*.bak
+*.orig
+*.rej
+nohup.out
+
+# --- Secrets (defence in depth) -------------------------------------------
+# Never commit credentials, even if a contributor forgets to redact them.
+.env
+.env.*
+*.pem
+*.key
+!assets/**/*.svg
+secrets.yml
+credentials.yml
+.gitleaks.toml
+
+# --- Node / tooling --------------------------------------------------------
+node_modules/
+npm-debug.log*
+yarn-error.log*

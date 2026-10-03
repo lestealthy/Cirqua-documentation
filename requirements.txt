@@ -1,0 +1,29 @@
+# ---------------------------------------------------------------------------
+# CIRQUA documentation - pinned build dependencies
+#
+# The GitHub Actions workflow installs exactly this file, so a local build and
+# a CI build use the same toolchain. Versions are pinned to guarantee a
+# reproducible build.
+# ---------------------------------------------------------------------------
+
+# Static site generator core
+mkdocs==1.6.1
+
+# Theme + Markdown extensions
+mkdocs-material==9.7.7
+mkdocs-material-extensions==1.3.1
+pymdown-extensions==12.1
+
+# Plugins used by mkdocs.yml
+mkdocs-git-revision-date-plugin==0.3.2
+mkdocs-minify-plugin==0.8.0
+mkdocs-redirects==1.2.3
+
+# YAML support for the `!!python/name:` tags used in mkdocs.yml
+PyYAML==6.0.3
+pyyaml_env_tag==1.1
+
+# Scripting layer (snippet extraction, manifest generation, validation)
+qrcode==8.2
+Pillow==12.3.0
+requests==2.34.2

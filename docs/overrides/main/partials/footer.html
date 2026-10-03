@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{#- CIRQUA technical documentation footer.
+     Lists all three organisations with clear role separation, plus the
+     repository, firmware revision and build provenance. Third-party marks
+     are not claimed as WattLab property.
+-#}
+
+<footer class="md-footer md-typeset">
+  <div class="md-footer-meta">
+    <div class="md-footer-meta__inner md-grid">
+
+      <div class="cirqua-footer">
+
+        <div class="cirqua-footer__brand">
+          <img class="cirqua-footer__logo"
+               src="{{ 'assets/branding/cirqua/cirqua-logo-all.png' | url }}"
+               alt="CIRQUA Waterwise Futures logo">
+          <p class="cirqua-footer__tag">
+            <strong>CIRQUA</strong> &mdash; Waterwise Futures<br>
+            Technical documentation for the embedded monitoring and
+            instrumentation platform.
+          </p>
+        </div>
+
+        <div class="cirqua-footer__col">
+          <h2 class="cirqua-footer__head">Organisations</h2>
+          <ul class="cirqua-footer__list">
+            <li>
+              <a href="https://cirqua-water.eu/" target="_blank" rel="noopener noreferrer">CIRQUA project (official)</a>
+            </li>
+            <li>
+              <a href="{{ config.extra.cirqua.partner_organisation }}" target="_blank" rel="noopener noreferrer">African Biotechnology Company</a>
+            </li>
+            <li><span class="cirqua-footer__plain">WattLab &mdash; documentation &amp; firmware engineering</span></li>
+          </ul>
+        </div>
+
+        <div class="cirqua-footer__col">
+          <h2 class="cirqua-footer__head">Repositories</h2>
+          <ul class="cirqua-footer__list">
+            <li>
+              <a href="{{ config.extra.cirqua.documentation_repository }}" target="_blank" rel="noopener noreferrer">Documentation source</a>
+            </li>
+            <li>
+              <a href="{{ config.extra.cirqua.firmware_repository }}" target="_blank" rel="noopener noreferrer">Firmware (<code>Cirqua</code>)</a>
+            </li>
+            <li>
+              <a href="{{ config.extra.cirqua.firmware_repository }}/issues" target="_blank" rel="noopener noreferrer">Firmware issues</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="cirqua-footer__col">
+          <h2 class="cirqua-footer__head">Build provenance</h2>
+          <ul class="cirqua-footer__list cirqua-footer__list--mono">
+            <li>Firmware revision
+              <code>{{ config.extra.cirqua.firmware_commit_short }}</code>
+            </li>
+            <li>Firmware branch
+              <code>main</code>
+            </li>
+            <li>Documentation revision
+              {% if page and page.meta and page.meta.git_revision_date_local %}
+                <code>{{ page.meta.git_revision_date_local | truncate(19, true, "") }}</code>
+              {% else %}
+                <code>see repository history</code>
+              {% endif %}
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <div class="md-footer__inner md-typeset">
+    <div class="cirqua-footer__legal">
+      <p>
+        &copy; {{ 'now' | date( '%Y' ) }} WattLab Engineering &mdash; documentation authored and maintained for the
+        CIRQUA Waterwise Futures initiative.
+      </p>
+      <p>
+        CIRQUA is funded by the European Union under the
+        <strong>Horizon Europe</strong> framework. CIRQUA is a
+        nature-based water-reuse project and does not represent the views of
+        the European Commission.
+      </p>
+      <p>
+        The CIRQUA and African Biotechnology Company names and marks are the
+        property of their respective owners and are reproduced here for
+        identification of project partners only. WattLab does not claim
+        ownership of these marks.
+      </p>
+      <p>
+        Third-party manufacturer specifications, scientific literature and
+        project descriptions remain the property of their authors and are
+        cited with attribution. See
+        <a href="{{ 'references/source-registry.html' | url }}">Source&nbsp;registry</a>.
+      </p>
+    </div>
+  </div>
+</footer>

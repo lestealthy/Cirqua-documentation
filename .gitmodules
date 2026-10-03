@@ -1,0 +1,3 @@
+[submodule "_external/Cirqua-firmware"]
+	path = _external/Cirqua-firmware
+	url = https://github.com/lestealthy/Cirqua.git
