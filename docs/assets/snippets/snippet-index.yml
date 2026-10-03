@@ -1,0 +1,503 @@
+generated_from: https://github.com/lestealthy/Cirqua
+branch: main
+commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+snippet_count: 41
+redacted_keys:
+- AUTHOR_PASSWORD
+- WIFI_PASSWORD
+snippets:
+- id: node1-pin-definitions
+  label: Node 1 hardware pin assignments, tank geometry and alert thresholds
+  symbol: ''
+  path: FreeRTOS_Implementation/Node1/Node1.ino
+  start_line: 5
+  end_line: 35
+  line_count: 31
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node1/Node1.ino
+  snippet_file: assets/snippets/node1-pin-definitions.cpp
+- id: node1-ultrasonic-measurement
+  label: Node 1 ultrasonic acquisition task (HC-SR04 trigger/echo to litres)
+  symbol: void\s+Task_Sensors_Node1\s*\(
+  path: FreeRTOS_Implementation/Node1/Node1.ino
+  start_line: 77
+  end_line: 116
+  line_count: 40
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node1/Node1.ino
+  snippet_file: assets/snippets/node1-ultrasonic-measurement.cpp
+- id: node1-frame-parser
+  label: Node 1 key/value field extraction helper
+  symbol: String\s+getFieldFromFrame\s*\(
+  path: FreeRTOS_Implementation/Node1/Node1.ino
+  start_line: 120
+  end_line: 132
+  line_count: 13
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node1/Node1.ino
+  snippet_file: assets/snippets/node1-frame-parser.cpp
+- id: node1-packet-processing
+  label: Node 2 telemetry frame processing into the protected telemetry struct
+  symbol: void\s+processNode2Packet\s*\(
+  path: FreeRTOS_Implementation/Node1/Node1.ino
+  start_line: 133
+  end_line: 157
+  line_count: 25
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node1/Node1.ino
+  snippet_file: assets/snippets/node1-packet-processing.cpp
+- id: node1-uart-task
+  label: Node 1 bidirectional UART task with 500 ms transmit interval
+  symbol: void\s+Task_UART_Node1\s*\(
+  path: FreeRTOS_Implementation/Node1/Node1.ino
+  start_line: 161
+  end_line: 204
+  line_count: 44
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node1/Node1.ino
+  snippet_file: assets/snippets/node1-uart-task.cpp
+- id: node1-lcd-task
+  label: Node 1 16x4 LCD rendering and status-string derivation
+  symbol: void\s+Task_LCD_Node1\s*\(
+  path: FreeRTOS_Implementation/Node1/Node1.ino
+  start_line: 220
+  end_line: 310
+  line_count: 91
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node1/Node1.ino
+  snippet_file: assets/snippets/node1-lcd-task.cpp
+- id: node1-setup
+  label: Node 1 task creation pinned to cores 0 and 1
+  symbol: void\s+setup\s*\(\s*\)\s*\{
+  path: FreeRTOS_Implementation/Node1/Node1.ino
+  start_line: 314
+  end_line: 335
+  line_count: 22
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node1/Node1.ino
+  snippet_file: assets/snippets/node1-setup.cpp
+- id: node2-pin-definitions
+  label: Node 2 pin assignments, DO electrical calibration constants and tank geometry
+  symbol: ''
+  path: FreeRTOS_Implementation/Node2/Node2.ino
+  start_line: 10
+  end_line: 32
+  line_count: 23
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node2/Node2.ino
+  snippet_file: assets/snippets/node2-pin-definitions.cpp
+- id: node2-sensor-task
+  label: 'Node 2 sensor acquisition task: DS18B20, dissolved oxygen, HC-SR04, DHT11'
+  symbol: void\s+Task_Sensors_Node2\s*\(
+  path: FreeRTOS_Implementation/Node2/Node2.ino
+  start_line: 98
+  end_line: 220
+  line_count: 123
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node2/Node2.ino
+  snippet_file: assets/snippets/node2-sensor-task.cpp
+- id: node2-parse-node1
+  label: Node 2 parser for the upstream Node 1 frame
+  symbol: bool\s+parseNode1Packet\s*\(
+  path: FreeRTOS_Implementation/Node2/Node2.ino
+  start_line: 225
+  end_line: 239
+  line_count: 15
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node2/Node2.ino
+  snippet_file: assets/snippets/node2-parse-node1.cpp
+- id: node2-parse-node3
+  label: Node 2 parser for the Node 3 reverse telemetry frame
+  symbol: bool\s+parseNode3ReversePacket\s*\(
+  path: FreeRTOS_Implementation/Node2/Node2.ino
+  start_line: 240
+  end_line: 254
+  line_count: 15
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node2/Node2.ino
+  snippet_file: assets/snippets/node2-parse-node3.cpp
+- id: node2-uart-routing
+  label: Node 2 UART routing, frame consolidation and echo to Node 1
+  symbol: void\s+Task_UART_Node2\s*\(
+  path: FreeRTOS_Implementation/Node2/Node2.ino
+  start_line: 259
+  end_line: 370
+  line_count: 112
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node2/Node2.ino
+  snippet_file: assets/snippets/node2-uart-routing.cpp
+- id: node2-setup
+  label: Node 2 task creation
+  symbol: void\s+setup\s*\(\s*\)\s*\{
+  path: FreeRTOS_Implementation/Node2/Node2.ino
+  start_line: 375
+  end_line: 394
+  line_count: 20
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node2/Node2.ino
+  snippet_file: assets/snippets/node2-setup.cpp
+- id: node3-pin-definitions
+  label: Node 3 pin assignments and flow calibration constant
+  symbol: ''
+  path: FreeRTOS_Implementation/Node3/Node3.ino
+  start_line: 3
+  end_line: 13
+  line_count: 11
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node3/Node3.ino
+  snippet_file: assets/snippets/node3-pin-definitions.cpp
+- id: node3-pulse-isr
+  label: Node 3 critical-section pulse counter ISR
+  symbol: ''
+  path: FreeRTOS_Implementation/Node3/Node3.ino
+  start_line: 15
+  end_line: 23
+  line_count: 9
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node3/Node3.ino
+  snippet_file: assets/snippets/node3-pulse-isr.cpp
+- id: node3-flow-task
+  label: Node 3 1 Hz flow rate computation from counted pulses
+  symbol: void\s+Task_Flow_Node3\s*\(
+  path: FreeRTOS_Implementation/Node3/Node3.ino
+  start_line: 43
+  end_line: 69
+  line_count: 27
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node3/Node3.ino
+  snippet_file: assets/snippets/node3-flow-task.cpp
+- id: node3-frame-validation
+  label: Node 3 upstream frame integrity check
+  symbol: bool\s+validateUpstreamFrame\s*\(
+  path: FreeRTOS_Implementation/Node3/Node3.ino
+  start_line: 71
+  end_line: 78
+  line_count: 8
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node3/Node3.ino
+  snippet_file: assets/snippets/node3-frame-validation.cpp
+- id: node3-uart-forwarding
+  label: Node 3 dual-UART forwarding plus upstream timeout fallback frame
+  symbol: void\s+Task_UART_Node3\s*\(
+  path: FreeRTOS_Implementation/Node3/Node3.ino
+  start_line: 82
+  end_line: 154
+  line_count: 73
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node3/Node3.ino
+  snippet_file: assets/snippets/node3-uart-forwarding.cpp
+- id: node3-setup
+  label: Node 3 task creation
+  symbol: void\s+setup\s*\(\s*\)\s*\{
+  path: FreeRTOS_Implementation/Node3/Node3.ino
+  start_line: 158
+  end_line: 170
+  line_count: 13
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node3/Node3.ino
+  snippet_file: assets/snippets/node3-setup.cpp
+- id: node4-pin-definitions
+  label: Node 4 pin assignments, ADC constants and tank geometry
+  symbol: ''
+  path: FreeRTOS_Implementation/Node4/Node4.ino
+  start_line: 10
+  end_line: 41
+  line_count: 32
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node4/Node4.ino
+  snippet_file: assets/snippets/node4-pin-definitions.cpp
+- id: node4-calibration-struct
+  label: Node 4 non-volatile calibration storage declaration
+  symbol: ''
+  path: FreeRTOS_Implementation/Node4/Node4.ino
+  start_line: 53
+  end_line: 66
+  line_count: 14
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node4/Node4.ino
+  snippet_file: assets/snippets/node4-calibration-struct.cpp
+- id: node4-load-calibration
+  label: Node 4 calibration load with factory defaults from NVS
+  symbol: void\s+loadCalibration\s*\(
+  path: FreeRTOS_Implementation/Node4/Node4.ino
+  start_line: 132
+  end_line: 156
+  line_count: 25
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node4/Node4.ino
+  snippet_file: assets/snippets/node4-load-calibration.cpp
+- id: node4-adc-configuration
+  label: Node 4 ESP32 ADC attenuation and resolution configuration
+  symbol: void\s+configureADC\s*\(
+  path: FreeRTOS_Implementation/Node4/Node4.ino
+  start_line: 161
+  end_line: 189
+  line_count: 29
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node4/Node4.ino
+  snippet_file: assets/snippets/node4-adc-configuration.cpp
+- id: node4-filtered-adc
+  label: Node 4 16-sample averaged raw ADC read
+  symbol: uint16_t\s+readADCFiltered\s*\(
+  path: FreeRTOS_Implementation/Node4/Node4.ino
+  start_line: 194
+  end_line: 213
+  line_count: 20
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node4/Node4.ino
+  snippet_file: assets/snippets/node4-filtered-adc.cpp
+- id: node4-sensor-voltage
+  label: Node 4 calibration-aware millivolt acquisition
+  symbol: float\s+readSensorVoltage\s*\(
+  path: FreeRTOS_Implementation/Node4/Node4.ino
+  start_line: 246
+  end_line: 266
+  line_count: 21
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node4/Node4.ino
+  snippet_file: assets/snippets/node4-sensor-voltage.cpp
+- id: node4-tank-volume
+  label: Node 4 effluent tank volume measurement with range rejection
+  symbol: bool\s+readTankVolume\s*\(
+  path: FreeRTOS_Implementation/Node4/Node4.ino
+  start_line: 313
+  end_line: 368
+  line_count: 56
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node4/Node4.ino
+  snippet_file: assets/snippets/node4-tank-volume.cpp
+- id: node4-ph-processing
+  label: Node 4 pH computation, temperature compensation and validity gating
+  symbol: ''
+  path: FreeRTOS_Implementation/Node4/Node4.ino
+  start_line: 458
+  end_line: 509
+  line_count: 52
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node4/Node4.ino
+  snippet_file: assets/snippets/node4-ph-processing.cpp
+- id: node4-turbidity-processing
+  label: Node 4 turbidity to NTU conversion and saturation handling
+  symbol: ''
+  path: FreeRTOS_Implementation/Node4/Node4.ino
+  start_line: 511
+  end_line: 582
+  line_count: 72
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node4/Node4.ino
+  snippet_file: assets/snippets/node4-turbidity-processing.cpp
+- id: node4-ec-processing
+  label: Node 4 conductivity K-factor conversion and temperature compensation
+  symbol: ''
+  path: FreeRTOS_Implementation/Node4/Node4.ino
+  start_line: 584
+  end_line: 635
+  line_count: 52
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node4/Node4.ino
+  snippet_file: assets/snippets/node4-ec-processing.cpp
+- id: node4-sensor-task
+  label: Node 4 combined sensor sampling task
+  symbol: void\s+Task_Sensors_Node4\s*\(
+  path: FreeRTOS_Implementation/Node4/Node4.ino
+  start_line: 374
+  end_line: 712
+  line_count: 339
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node4/Node4.ino
+  snippet_file: assets/snippets/node4-sensor-task.cpp
+- id: node4-calibration-console
+  label: Node 4 PC serial calibration and diagnostics console
+  symbol: void\s+handleSerialCalibrationCommands\s*\(
+  path: FreeRTOS_Implementation/Node4/Node4.ino
+  start_line: 717
+  end_line: 931
+  line_count: 215
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node4/Node4.ino
+  snippet_file: assets/snippets/node4-calibration-console.cpp
+- id: node4-packet-cleaner
+  label: Node 4 upstream packet cleaning (removes stale AT/AH fields)
+  symbol: String\s+cleanUpstreamPacket\s*\(
+  path: FreeRTOS_Implementation/Node4/Node4.ino
+  start_line: 936
+  end_line: 990
+  line_count: 55
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node4/Node4.ino
+  snippet_file: assets/snippets/node4-packet-cleaner.cpp
+- id: node4-uart-task
+  label: Node 4 UART forwarding and cluster packet assembly
+  symbol: void\s+Task_UART_Node4\s*\(
+  path: FreeRTOS_Implementation/Node4/Node4.ino
+  start_line: 996
+  end_line: 1181
+  line_count: 186
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node4/Node4.ino
+  snippet_file: assets/snippets/node4-uart-task.cpp
+- id: node4-lcd-task
+  label: Node 4 local 16x4 LCD rendering
+  symbol: void\s+Task_LCD_Node4\s*\(
+  path: FreeRTOS_Implementation/Node4/Node4.ino
+  start_line: 1187
+  end_line: 1259
+  line_count: 73
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node4/Node4.ino
+  snippet_file: assets/snippets/node4-lcd-task.cpp
+- id: node4-setup
+  label: Node 4 task creation
+  symbol: void\s+setup\s*\(\s*\)\s*\{
+  path: FreeRTOS_Implementation/Node4/Node4.ino
+  start_line: 1264
+  end_line: 1336
+  line_count: 73
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node4/Node4.ino
+  snippet_file: assets/snippets/node4-setup.cpp
+- id: node4-smtp-network-config
+  label: Node 4 SMTP variant network and SMTP configuration block (placeholders only)
+  symbol: ''
+  path: FreeRTOS_Implementation/Node4_SMTP/Node4_SMTP.ino
+  start_line: 11
+  end_line: 24
+  line_count: 14
+  status: CURRENT
+  redacted_keys:
+  - AUTHOR_PASSWORD
+  - WIFI_PASSWORD
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node4_SMTP/Node4_SMTP.ino
+  snippet_file: assets/snippets/node4-smtp-network-config.cpp
+- id: node4-smtp-init-network
+  label: Node 4 SMTP Wi-Fi association and NTP time synchronisation
+  symbol: void\s+initNetworkAndTime\s*\(
+  path: FreeRTOS_Implementation/Node4_SMTP/Node4_SMTP.ino
+  start_line: 107
+  end_line: 136
+  line_count: 30
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node4_SMTP/Node4_SMTP.ino
+  snippet_file: assets/snippets/node4-smtp-init-network.cpp
+- id: node4-smtp-send-mail
+  label: Node 4 SMTP message dispatch helper
+  symbol: bool\s+sendMailMessage\s*\(
+  path: FreeRTOS_Implementation/Node4_SMTP/Node4_SMTP.ino
+  start_line: 138
+  end_line: 171
+  line_count: 34
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node4_SMTP/Node4_SMTP.ino
+  snippet_file: assets/snippets/node4-smtp-send-mail.cpp
+- id: node4-smtp-alert-logic
+  label: Node 4 SMTP heartbeat and fault-alert rate limiting
+  symbol: ''
+  path: FreeRTOS_Implementation/Node4_SMTP/Node4_SMTP.ino
+  start_line: 301
+  end_line: 350
+  line_count: 50
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node4_SMTP/Node4_SMTP.ino
+  snippet_file: assets/snippets/node4-smtp-alert-logic.cpp
+- id: node4-smtp-setup
+  label: Node 4 SMTP task creation
+  symbol: void\s+setup\s*\(\s*\)\s*\{
+  path: FreeRTOS_Implementation/Node4_SMTP/Node4_SMTP.ino
+  start_line: 428
+  end_line: 448
+  line_count: 21
+  status: CURRENT
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/FreeRTOS_Implementation/Node4_SMTP/Node4_SMTP.ino
+  snippet_file: assets/snippets/node4-smtp-setup.cpp
+- id: legacy-node3-ping
+  label: Historical / Legacy - Node 3 predecessor sketch (not current architecture)
+  symbol: ''
+  path: _OLD/node3_fixed/node3_fixed.ino
+  start_line: 1
+  end_line: 40
+  line_count: 40
+  status: HISTORICAL
+  commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  commit_short: db6d9b8
+  source_url: https://github.com/lestealthy/Cirqua/blob/db6d9b896341a9c7d8fd01913e854b663c110d55/_OLD/node3_fixed/node3_fixed.ino
+  snippet_file: assets/snippets/legacy-node3-ping.cpp
