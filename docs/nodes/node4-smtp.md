@@ -12,6 +12,18 @@ description: Field-service manual for CIRQUA Node 4 SMTP — same water-quality 
 
 --8<-- "assets/generated/node-cards/node4-smtp.html"
 
+
+<div class="cirqua-photo-slot">
+  <span class="cirqua-photo-slot__label">Photo required</span>
+  <p class="cirqua-photo-slot__title">Node 4 (SMTP) — analytics with e-mail reporting — no photograph on record</p>
+  <p class="cirqua-photo-slot__note">
+    Photograph the node, the probe positions, and any antenna fitted for the Wi-Fi variant.
+    No photograph of CIRQUA hardware was found in the firmware repository or
+    the local workspace, so this slot is intentionally empty. A stock or
+    generated image is not used, because that would misrepresent the hardware.
+  </p>
+</div>
+
 ## Responsibilities
 
 The SMTP variant does everything `Node4` does for measurement and forwarding, and

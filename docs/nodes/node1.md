@@ -12,6 +12,18 @@ description: Field-service manual for CIRQUA Node 1 — the cluster head: TAV ul
 
 --8<-- "assets/generated/node-cards/node1.html"
 
+
+<div class="cirqua-photo-slot">
+  <span class="cirqua-photo-slot__label">Photo required</span>
+  <p class="cirqua-photo-slot__title">Node 1 — Collection Tank A — no photograph on record</p>
+  <p class="cirqua-photo-slot__note">
+    Photograph the node, its ultrasonic transducer above the tank, the LCD and the enclosure as installed. Note the tank label, because the same enclosure is used on two different tanks.
+    No photograph of CIRQUA hardware was found in the firmware repository or
+    the local workspace, so this slot is intentionally empty. A stock or
+    generated image is not used, because that would misrepresent the hardware.
+  </p>
+</div>
+
 ## Responsibilities
 
 Node 1 does four things, and only these four:

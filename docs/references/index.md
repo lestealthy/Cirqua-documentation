@@ -118,6 +118,58 @@ this page: every external source as a YAML record with `id`, `title`,
 `publisher`, `source_type`, `url`, `accessed`, `used_for`, `authority` and
 `notes`, in a form that can be diffed and checked.
 
+## Verification model
+
+A source tells you whether a claim is *attributable*. A separate question is how
+far it has actually been *checked*. Both are recorded.
+
+### Claim categories
+
+| Category | Supported by | Example |
+|---|---|---|
+| **Project fact** | The official CIRQUA or ABC site, with an access date | CIRQUA is funded under Horizon Europe for 4.09 M EUR |
+| **Firmware fact** | Demonstrated directly by the pinned source | GPIO 14 carries the turbidity analogue input |
+| **Manufacturer fact** | The manufacturer's own datasheet or product page | SEN0189 outputs 0–4.5 V |
+| **Scientific fact** | Peer-reviewed or institutional literature | Constructed wetlands as a nature-based treatment technology |
+| **Project observation** | Directly observed during CIRQUA testing | *No such observation is currently on record* |
+| **WattLab engineering interpretation** | Our reasoning from the evidence, labelled as such | The clear-water voltage cannot be measured at `ADC_11db` |
+
+### Verification states
+
+| State | Meaning |
+|---|---|
+| **Verified** | Audited against the named evidence |
+| **Partially verified** | Some part verified, remainder explicitly unknown |
+| **Not verified** | No evidence available; recorded as unknown |
+| **Historical** | Describes a superseded implementation |
+| **Inferred** | Concluded from evidence, not directly stated by it |
+| **Requires hardware test** | Cannot be settled from source alone |
+
+Status is shown with a glyph **and** a text label, never by colour alone.
+
+### Where the declaration lives
+
+Every area's state is declared in
+[`sources/verification.yml`](https://github.com/lestealthy/Cirqua-documentation/blob/main/sources/verification.yml)
+and rendered into the node identity cards and the site revision bar by
+`scripts/generate_node_cards.py`. Nothing infers a status at render time, so the
+declaration is the single reviewable source of truth.
+
+### The single most important caveat
+
+!!! danger "No hardware test evidence exists"
+    Neither the firmware repository nor the WattLab documentation workspace
+    contains a hardware test log, bench record or commissioning report. Every
+    hardware statement in this documentation is therefore either derived from
+    firmware source or explicitly marked as requiring a hardware test.
+
+    Firmware behaviour is source-verified. Installed hardware is **not**. That
+    distinction is carried through every node card, sensor page and limitation
+    entry rather than being left to a reader to infer.
+
+Of the 21 declared areas, 7 are verified, 4 partially verified, 9 not verified
+and 1 requires a hardware test.
+
 ## How sources are treated in this documentation
 
 | Claim type | What may be cited | Never acceptable |
@@ -137,6 +189,13 @@ this page: every external source as a YAML record with `id`, `title`,
     documentation also does not assert an authoritative HC-SR04 datasheet,
     because the part is widely cloned and has no single authoritative
     manufacturer.
+
+!!! note "Candidate replacements are recorded, but never as fitted parts"
+    Because a technician may need to replace an unidentified module, the DFRobot
+    Gravity equivalents for pH, conductivity and dissolved oxygen are listed on
+    [Datasheets](datasheets.md) as **candidates**. It is *not* established that
+    these are the parts fitted to CIRQUA hardware, and no specification from
+    that family is cited as a CIRQUA requirement anywhere in this documentation.
 
 ## Related
 

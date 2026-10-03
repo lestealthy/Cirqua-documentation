@@ -62,12 +62,17 @@ jobs:
           python scripts/extract_code_snippets.py
           python scripts/generate_qr_codes.py
           python scripts/generate_favicon.py
+          python scripts/generate_node_cards.py
+          python scripts/generate_system_explorer.py
 
       - name: Verify internal link sources
         run: python scripts/fix_internal_links.py --check
 
       - name: Verify code provenance against the snippet index
         run: python scripts/verify_provenance.py
+
+      - name: Technical truth audit against the pinned firmware
+        run: python scripts/audit_truth.py
 
       - name: Validation suite
         run: python scripts/validate_docs.py

@@ -144,15 +144,31 @@ Python 3.12 is used in CI. Python 3.10 or later works locally.
 | `scripts/generate_source_manifest.py` | Regenerate `sources/firmware-source.yml` from the submodule's Git state |
 | `scripts/generate_qr_codes.py` | Generate the field-service QR codes and their destination manifest |
 | `scripts/generate_favicon.py` | Derive the favicon set from the official logo |
+| `scripts/generate_node_cards.py` | Generate node identity cards and the site revision bar from firmware + `sources/verification.yml` |
+| `scripts/generate_system_explorer.py` | Generate the interactive system-explorer fragment from the firmware |
+| `scripts/fix_internal_links.py` | Normalise internal Markdown links to `.md` sources so strict builds are warning-free |
+| `scripts/verify_provenance.py` | Confirm every code provenance block matches the snippet index |
+| `scripts/audit_truth.py` | Re-derive GPIOs, tasks, constants and baud from the firmware and compare against the documentation |
 | `scripts/validate_docs.py` | Full validation suite (see below) |
+| `scripts/check_site_links.py` | Crawl the built HTML and verify every internal link and asset resolves |
+| `scripts/generate_audit_report.py` | Print the internal audit report |
 
 ## Validation
 
 ```bash
 python scripts/validate_docs.py                # required checks
-python scripts/validate_docs.py --external     # also probe external URLs
+python scripts/audit_truth.py                  # documentation vs firmware
+python scripts/verify_provenance.py            # code citations
 mkdocs build --strict --clean                  # build must be warning-free
+python scripts/check_site_links.py             # built-output links
 ```
+
+`scripts/audit_truth.py` is the one that keeps the prose honest. It re-reads the
+pinned firmware and checks that every `PIN_*` macro, task name, task stack size,
+priority and core pinning, calibration constant, baud rate and cited commit in the
+documentation still matches the source. It also refuses any page that cites a file
+inside `_OLD/` without labelling it historical, and any page that asserts a
+hardware revision the repositories do not contain.
 
 The validation suite checks:
 
@@ -170,6 +186,19 @@ The validation suite checks:
 12. branding assets are present
 13. `mkdocs.yml` carries the mandatory WattLab configuration
 14. the palette is light-only with no dark scheme or toggle
+
+## Verification model
+
+`sources/verification.yml` declares, for each of 21 areas of the system, how far
+it has been verified and on what evidence. The generated node cards and the site
+revision bar render that declaration; nothing infers a status at render time.
+
+The governing caveat is recorded there and shown on every node card: **no
+hardware test evidence exists** in either repository. Firmware behaviour is
+source-verified; installed hardware is not.
+
+See [Verification model](https://lestealthy.github.io/Cirqua-documentation/references/) for
+the claim categories and verification states in full.
 
 External URL probing is advisory: an unreachable third-party site is reported
 but never fails the build.
@@ -194,13 +223,22 @@ git submodule update --remote _external/Cirqua-firmware
 python scripts/generate_source_manifest.py
 python scripts/extract_code_snippets.py
 python scripts/generate_qr_codes.py
+python scripts/generate_node_cards.py
+python scripts/generate_system_explorer.py
+python scripts/audit_truth.py
 python scripts/validate_docs.py
 mkdocs build --strict --clean
+python scripts/check_site_links.py
 ```
 
-Then review the diff in `docs/assets/snippets/` and update any page whose
-verified values changed — GPIO maps, task tables, protocol frames, calibration
-constants and LCD layouts are all audited content and are not automated prose.
+`audit_truth.py` will fail loudly if the firmware change moved a GPIO, a task
+parameter or a constant that the documentation states. That is deliberate: the
+prose is not auto-regenerated, because a firmware change may alter the *meaning* of
+a page, not just its numbers.
+
+Then review the diff in `docs/assets/snippets/` and update any page whose verified
+values changed — GPIO maps, task tables, protocol frames, calibration constants
+and LCD layouts are all audited content and are not automated prose.
 
 ## QR field service
 

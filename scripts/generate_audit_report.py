@@ -92,6 +92,12 @@ sections = [
     "references", "historical",
 ]
 
+# Declared verification states, read from the reviewable declaration file.
+verification = yaml.safe_load((REPO / "sources" / "verification.yml").read_text(encoding="utf-8"))
+vstates: dict[str, int] = {}
+for area in verification["areas"].values():
+    vstates[area["state"]] = vstates.get(area["state"], 0) + 1
+
 git_log = run("git", "-C", str(REPO), "log", "--oneline").splitlines()
 
 def semver() -> str:
@@ -168,8 +174,11 @@ gates = [
     ("QR codes not stale", "scripts/generate_qr_codes.py --check"),
     ("favicon not stale", "scripts/generate_favicon.py --check"),
     ("firmware manifest not stale", "scripts/generate_source_manifest.py --check"),
+    ("node identity cards not stale", "scripts/generate_node_cards.py --check"),
+    ("system explorer not stale", "scripts/generate_system_explorer.py --check"),
     ("internal links use .md", "scripts/fix_internal_links.py --check"),
     ("code provenance matches index", "scripts/verify_provenance.py"),
+    ("technical truth audit vs firmware", "scripts/audit_truth.py"),
     ("documentation validation suite", "scripts/validate_docs.py"),
     ("built-site links and assets", "scripts/check_site_links.py"),
 ]
@@ -188,6 +197,13 @@ print()
 print("Deployment")
 print(f"  Live site                : {SITE_BASE}/")
 print(f"  Workflows                : .github/workflows/validation.yml, docs.yml")
+print()
+print("Verification model (declared in sources/verification.yml)")
+print(f"  Declared areas            : {len(verification['areas'])}")
+for state in ("VERIFIED", "PARTIALLY_VERIFIED", "REQUIRES_HARDWARE_TEST", "NOT_VERIFIED"):
+    if vstates.get(state):
+        print(f"    {state:<24} {vstates[state]}")
+print(f"  Hardware test evidence    : {'present' if verification['meta']['hardware_test_evidence_available'] else 'NONE (firmware source-verified only)'}")
 print()
 print("Secrets")
 print("  credentials/tokens       : none published")

@@ -12,6 +12,18 @@ description: Field-service manual for CIRQUA Node 2 — the cluster router: diss
 
 --8<-- "assets/generated/node-cards/node2.html"
 
+
+<div class="cirqua-photo-slot">
+  <span class="cirqua-photo-slot__label">Photo required</span>
+  <p class="cirqua-photo-slot__title">Node 2 — Feeding Tank B and water probes — no photograph on record</p>
+  <p class="cirqua-photo-slot__note">
+    Photograph the node, the dissolved oxygen module, the DS18B20 and DHT11 positions, and the two UART links leaving the enclosure.
+    No photograph of CIRQUA hardware was found in the firmware repository or
+    the local workspace, so this slot is intentionally empty. A stock or
+    generated image is not used, because that would misrepresent the hardware.
+  </p>
+</div>
+
 ## Responsibilities
 
 Node 2 is the **router** of the cluster. It has four duties:

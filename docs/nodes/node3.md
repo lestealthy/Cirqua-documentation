@@ -12,6 +12,18 @@ description: Field-service manual for CIRQUA Node 3 — pulse-counted flow measu
 
 --8<-- "assets/generated/node-cards/node3.html"
 
+
+<div class="cirqua-photo-slot">
+  <span class="cirqua-photo-slot__label">Photo required</span>
+  <p class="cirqua-photo-slot__title">Node 3 — Flow meter — no photograph on record</p>
+  <p class="cirqua-photo-slot__note">
+    Photograph the node, the flow sensor body in the pipework, and the flow direction arrow or body marking.
+    No photograph of CIRQUA hardware was found in the firmware repository or
+    the local workspace, so this slot is intentionally empty. A stock or
+    generated image is not used, because that would misrepresent the hardware.
+  </p>
+</div>
+
 ## Responsibilities
 
 Node 3 is the smallest node in the cluster and has **three** duties:

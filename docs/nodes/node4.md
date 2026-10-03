@@ -12,6 +12,18 @@ description: Field-service manual for CIRQUA Node 4 — pH, turbidity, EC, subme
 
 --8<-- "assets/generated/node-cards/node4.html"
 
+
+<div class="cirqua-photo-slot">
+  <span class="cirqua-photo-slot__label">Photo required</span>
+  <p class="cirqua-photo-slot__title">Node 4 — Effluent analytics — no photograph on record</p>
+  <p class="cirqua-photo-slot__note">
+    Photograph the node, the pH, turbidity and conductivity probe positions, the submerged temperature probe, and the LCD.
+    No photograph of CIRQUA hardware was found in the firmware repository or
+    the local workspace, so this slot is intentionally empty. A stock or
+    generated image is not used, because that would misrepresent the hardware.
+  </p>
+</div>
+
 ## Responsibilities
 
 Node 4 terminates the measurement chain and adds the water-quality dimension.

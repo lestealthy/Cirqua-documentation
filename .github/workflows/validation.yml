@@ -69,11 +69,20 @@ jobs:
       - name: Verify firmware manifest is current
         run: python scripts/generate_source_manifest.py --check
 
+      - name: Verify node identity cards are current
+        run: python scripts/generate_node_cards.py --check
+
+      - name: Verify system explorer is current
+        run: python scripts/generate_system_explorer.py --check
+
       - name: Verify internal link sources
         run: python scripts/fix_internal_links.py --check
 
       - name: Verify code provenance against the snippet index
         run: python scripts/verify_provenance.py
+
+      - name: Technical truth audit against the pinned firmware
+        run: python scripts/audit_truth.py
 
       - name: Documentation validation suite
         run: python scripts/validate_docs.py
