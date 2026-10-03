@@ -274,6 +274,68 @@ body {
   }
 }
 
+/* Logo strip rendered by overrides/partials/logo.html.
+   The header wraps this in the standard md-logo anchor, and renders the site
+   title separately in md-header__topic, so only the logos live here. */
+.cirqua-masthead {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.cirqua-masthead__logo {
+  height: 1.5rem;
+  width: auto;
+  max-width: 5.5rem;
+  object-fit: contain;
+  display: block;
+}
+
+.cirqua-masthead__logo--cirqua {
+  max-width: 6rem;
+}
+
+.cirqua-masthead__logo--square {
+  height: 1.6rem;
+  width: 1.6rem;
+  border-radius: 4px;
+}
+
+/* The WattLab mark is a dark disc, so it needs a light keyline to separate it
+   from a white header without altering the logo itself. */
+.cirqua-masthead__logo--dark {
+  background: var(--cirqua-navy);
+}
+
+.cirqua-masthead__rule {
+  width: 1px;
+  height: 1.25rem;
+  background: var(--cirqua-border);
+}
+
+@media screen and (max-width: 76.1875em) {
+  .cirqua-masthead__logo {
+    max-width: 4.2rem;
+  }
+}
+
+@media screen and (max-width: 44.9844em) {
+  .cirqua-masthead {
+    gap: 0.3rem;
+  }
+  .cirqua-masthead__logo {
+    max-width: 3.2rem;
+    height: 1.2rem;
+  }
+  .cirqua-masthead__logo--square {
+    height: 1.2rem;
+    width: 1.2rem;
+  }
+  .cirqua-masthead__rule {
+    display: none;
+  }
+}
+
 /* ==========================================================================
    Navigation tabs
    ========================================================================== */

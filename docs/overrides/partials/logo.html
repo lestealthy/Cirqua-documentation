@@ -1,0 +1,35 @@
+{#- CIRQUA masthead.
+
+  Overrides Material's `partials/logo.html`, which the header wraps in the
+  `md-logo` anchor. Only the logo partial is replaced; the header itself is
+  left untouched so that the search field, the repository link and the page
+  title keep working normally.
+
+  Brand hierarchy expressed here:
+    CIRQUA  - the primary project (its official logo leads)
+    WattLab - documents the engineering
+    ABC     - project partner identity
+
+  Logos are official assets and are used unmodified.
+-#}
+<div class="cirqua-masthead">
+  <img
+    class="cirqua-masthead__logo cirqua-masthead__logo--cirqua"
+    src="{{ 'assets/branding/cirqua/cirqua-logo-all.png' | url }}"
+    alt="CIRQUA Waterwise Futures"
+    title="CIRQUA Waterwise Futures"
+  />
+  <span class="cirqua-masthead__rule" aria-hidden="true"></span>
+  <img
+    class="cirqua-masthead__logo cirqua-masthead__logo--square cirqua-masthead__logo--dark"
+    src="{{ 'assets/branding/wattlab/wattlab-logo.svg' | url }}"
+    alt="WattLab"
+    title="Documentation and firmware engineering by WattLab"
+  />
+  <img
+    class="cirqua-masthead__logo cirqua-masthead__logo--abc"
+    src="{{ 'assets/branding/abc/abc-logo.png' | url }}"
+    alt="African Biotechnology Company"
+    title="African Biotechnology Company, CIRQUA project partner"
+  />
+</div>

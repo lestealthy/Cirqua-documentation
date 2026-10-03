@@ -1,0 +1,120 @@
+{#- CIRQUA technical documentation footer.
+
+  Replaces Material's `partials/footer.html`. This is a standalone partial and
+  must NOT extend base.html: base.html includes this partial, so extending it
+  would recurse infinitely.
+
+  The footer states the role of each organisation, links both repositories and
+  the official sites, and records build provenance. Third-party marks are
+  acknowledged as the property of their owners and are not claimed by WattLab.
+-#}
+
+<footer class="md-footer">
+  {% if "navigation.footer" in features %}
+    {% if page.previous_page or page.next_page %}
+      {% set hidden = "hidden" if page.meta and page.meta.hide and "footer" in page.meta.hide %}
+      <nav class="md-footer__inner md-grid" aria-label="{{ lang.t('footer') }}" {{ hidden }}>
+        {% if page.previous_page %}
+          {% set direction = lang.t("footer.previous") %}
+          <a href="{{ page.previous_page.url | url }}" class="md-footer__link md-footer__link--prev" aria-label="{{ direction }}: {{ page.previous_page.title | e }}">
+            <div class="md-footer__button md-icon">
+              {% set icon = config.theme.icon.previous or "material/arrow-left" %}
+              {% include ".icons/" ~ icon ~ ".svg" %}
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">{{ direction }}</span>
+              <div class="md-ellipsis">{{ page.previous_page.title }}</div>
+            </div>
+          </a>
+        {% endif %}
+        {% if page.next_page %}
+          {% set direction = lang.t("footer.next") %}
+          <a href="{{ page.next_page.url | url }}" class="md-footer__link md-footer__link--next" aria-label="{{ direction }}: {{ page.next_page.title | e }}">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">{{ direction }}</span>
+              <div class="md-ellipsis">{{ page.next_page.title }}</div>
+            </div>
+            <div class="md-footer__button md-icon">
+              {% set icon = config.theme.icon.next or "material/arrow-right" %}
+              {% include ".icons/" ~ icon ~ ".svg" %}
+            </div>
+          </a>
+        {% endif %}
+      </nav>
+    {% endif %}
+  {% endif %}
+
+  <div class="md-footer-meta">
+    <div class="md-footer-meta__inner md-grid">
+
+      <div class="cirqua-footer">
+
+        <div class="cirqua-footer__brand">
+          <img class="cirqua-footer__logo"
+               src="{{ 'assets/branding/cirqua/cirqua-logo-all.png' | url }}"
+               alt="CIRQUA Waterwise Futures">
+          <p class="cirqua-footer__tag">
+            <strong>CIRQUA</strong> &mdash; Waterwise Futures<br>
+            Technical documentation for the embedded monitoring and
+            instrumentation platform.
+          </p>
+        </div>
+
+        <div class="cirqua-footer__col">
+          <h2 class="cirqua-footer__head">Organisations</h2>
+          <ul class="cirqua-footer__list">
+            <li><a href="https://cirqua-water.eu/" target="_blank" rel="noopener noreferrer">CIRQUA project (official)</a></li>
+            <li><a href="{{ config.extra.cirqua.partner_organisation }}" target="_blank" rel="noopener noreferrer">African Biotechnology Company</a></li>
+            <li><span class="cirqua-footer__plain">WattLab &mdash; documentation &amp; firmware engineering</span></li>
+          </ul>
+        </div>
+
+        <div class="cirqua-footer__col">
+          <h2 class="cirqua-footer__head">Repositories</h2>
+          <ul class="cirqua-footer__list">
+            <li><a href="{{ config.extra.cirqua.documentation_repository }}" target="_blank" rel="noopener noreferrer">Documentation source</a></li>
+            <li><a href="{{ config.extra.cirqua.firmware_repository }}" target="_blank" rel="noopener noreferrer">Firmware (<code>Cirqua</code>)</a></li>
+            <li><a href="{{ config.extra.cirqua.firmware_repository }}/issues" target="_blank" rel="noopener noreferrer">Firmware issues</a></li>
+          </ul>
+        </div>
+
+        <div class="cirqua-footer__col">
+          <h2 class="cirqua-footer__head">Build provenance</h2>
+          <ul class="cirqua-footer__list cirqua-footer__list--mono">
+            <li>Firmware revision <code>{{ config.extra.cirqua.firmware_commit_short }}</code></li>
+            <li>Firmware branch <code>{{ config.extra.cirqua.firmware_commit | truncate(0, true, "") }}main</code></li>
+            <li>Documentation <a href="{{ config.extra.cirqua.documentation_repository }}/commits/main" target="_blank" rel="noopener noreferrer">revision history</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <div class="md-footer__inner md-typeset">
+    <div class="cirqua-footer__legal">
+      <p>
+        Documentation &copy; WattLab Engineering, authored and maintained for the
+        CIRQUA Waterwise Futures initiative. Build provenance, including the
+        firmware revision this site was generated from, is shown above and in
+        the repository.
+      </p>
+      <p>
+        CIRQUA is funded by the European Union under the <strong>Horizon Europe</strong>
+        framework. CIRQUA is a nature-based water-reuse project and does not represent the
+        views of the European Commission.
+      </p>
+      <p>
+        The CIRQUA and African Biotechnology Company names and marks are the property of
+        their respective owners and are reproduced here to identify project partners only.
+        WattLab does not claim ownership of these marks.
+      </p>
+      <p>
+        Third-party manufacturer specifications, scientific literature and project
+        descriptions remain the property of their authors and are cited with attribution in
+        <a href="{{ 'references/source-registry.html' | url }}">the source registry</a>.
+      </p>
+    </div>
+  </div>
+</footer>
