@@ -87,6 +87,13 @@ plugins:
   - git-revision-date:
       enabled: !ENV [CI, false]
 
+# Generated fragments are included into pages by pymdownx.snippets; they are
+# not pages in their own right. Without this they would be copied into the
+# published site as standalone HTML files with links that resolve relative to
+# the wrong directory.
+exclude_docs: |
+  assets/generated/
+
 markdown_extensions:
   - admonition
   - attr_list
@@ -133,9 +140,11 @@ markdown_extensions:
 extra_css:
   - stylesheets/extra.css
   - stylesheets/footer.css
+  - stylesheets/components.css
 
 extra_javascript:
   - javascripts/extra.js
+  - javascripts/explorer.js
 
 extra:
   generator: false
@@ -169,6 +178,7 @@ nav:
 
   - Architecture:
       - architecture/index.md
+      - System Explorer: architecture/system-explorer.md
       - System Architecture: architecture/system-architecture.md
       - Node Topology: architecture/node-topology.md
       - Data Flow: architecture/data-flow.md

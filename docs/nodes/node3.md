@@ -8,75 +8,9 @@ description: Field-service manual for CIRQUA Node 3 — pulse-counted flow measu
 
 # Node 3 (Flow Meter and Frame Forwarder)
 
-## Identity
+## Identity card
 
-<div class="cirqua-identity">
-
-  <div class="cirqua-identity__item">
-
-    <span class="cirqua-identity__label">Node name</span>
-
-    <span class="cirqua-identity__value">Node 3</span>
-
-  </div>
-
-  <div class="cirqua-identity__item">
-
-    <span class="cirqua-identity__label">Purpose</span>
-
-    <span class="cirqua-identity__value">Flow injector — forwards the upstream frame to Node 4 and appends the cluster's flow reading</span>
-
-  </div>
-
-  <div class="cirqua-identity__item">
-
-    <span class="cirqua-identity__label">Physical role</span>
-
-    <span class="cirqua-identity__value">Inline flow measurement at the transfer line between Feeding Tank B and the treatment train</span>
-
-  </div>
-
-  <div class="cirqua-identity__item">
-
-    <span class="cirqua-identity__label">Firmware variant</span>
-
-    <span class="cirqua-identity__value">FreeRTOS_Implementation/Node3 <span class="cirqua-badge cirqua-badge--current">Current</span></span>
-
-  </div>
-
-  <div class="cirqua-identity__item">
-
-    <span class="cirqua-identity__label">Firmware commit</span>
-
-    <span class="cirqua-identity__value"><code>db6d9b8</code></span>
-
-  </div>
-
-  <div class="cirqua-identity__item">
-
-    <span class="cirqua-identity__label">Firmware file</span>
-
-    <span class="cirqua-identity__value"><code>FreeRTOS_Implementation/Node3/Node3.ino</code></span>
-
-  </div>
-
-  <div class="cirqua-identity__item">
-
-    <span class="cirqua-identity__label">Controller</span>
-
-    <span class="cirqua-identity__value">ESP32</span>
-
-  </div>
-
-  <div class="cirqua-identity__item">
-
-    <span class="cirqua-identity__label">Hardware revision</span>
-
-    <span class="cirqua-identity__value">Not verified from the current source.</span>
-
-  </div>
-
-</div>
+--8<-- "assets/generated/node-cards/node3.html"
 
 ## Responsibilities
 

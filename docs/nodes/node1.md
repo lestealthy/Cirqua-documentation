@@ -8,75 +8,9 @@ description: Field-service manual for CIRQUA Node 1 — the cluster head: TAV ul
 
 # Node 1 (Collection Tank A Level)
 
-## Identity
+## Identity card
 
-<div class="cirqua-identity">
-
-  <div class="cirqua-identity__item">
-
-    <span class="cirqua-identity__label">Node name</span>
-
-    <span class="cirqua-identity__value">Node 1</span>
-
-  </div>
-
-  <div class="cirqua-identity__item">
-
-    <span class="cirqua-identity__label">Purpose</span>
-
-    <span class="cirqua-identity__value">Cluster head — originates the upstream telemetry frame and drives the local display</span>
-
-  </div>
-
-  <div class="cirqua-identity__item">
-
-    <span class="cirqua-identity__label">Physical role</span>
-
-    <span class="cirqua-identity__value">Collection Tank A (TAV) level measurement, mounted over the collection tank</span>
-
-  </div>
-
-  <div class="cirqua-identity__item">
-
-    <span class="cirqua-identity__label">Firmware variant</span>
-
-    <span class="cirqua-identity__value">FreeRTOS_Implementation/Node1 <span class="cirqua-badge cirqua-badge--current">Current</span></span>
-
-  </div>
-
-  <div class="cirqua-identity__item">
-
-    <span class="cirqua-identity__label">Firmware commit</span>
-
-    <span class="cirqua-identity__value"><code>db6d9b8</code></span>
-
-  </div>
-
-  <div class="cirqua-identity__item">
-
-    <span class="cirqua-identity__label">Firmware file</span>
-
-    <span class="cirqua-identity__value"><code>FreeRTOS_Implementation/Node1/Node1.ino</code></span>
-
-  </div>
-
-  <div class="cirqua-identity__item">
-
-    <span class="cirqua-identity__label">Controller</span>
-
-    <span class="cirqua-identity__value">ESP32</span>
-
-  </div>
-
-  <div class="cirqua-identity__item">
-
-    <span class="cirqua-identity__label">Hardware revision</span>
-
-    <span class="cirqua-identity__value">Not verified from the current source.</span>
-
-  </div>
-
-</div>
+--8<-- "assets/generated/node-cards/node1.html"
 
 ## Responsibilities
 

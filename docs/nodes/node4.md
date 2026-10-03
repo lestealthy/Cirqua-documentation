@@ -8,85 +8,9 @@ description: Field-service manual for CIRQUA Node 4 — pH, turbidity, EC, subme
 
 # Node 4 (Water Quality Analytics Tail)
 
-## Identity
+## Identity card
 
-<div class="cirqua-identity">
-
-  <div class="cirqua-identity__item">
-
-    <span class="cirqua-identity__label">Node name</span>
-
-    <span class="cirqua-identity__value">Node 4</span>
-
-  </div>
-
-  <div class="cirqua-identity__item">
-
-    <span class="cirqua-identity__label">Purpose</span>
-
-    <span class="cirqua-identity__value">Cluster tail — measures water quality, appends its fields to the cluster frame and forwards to the downstream controller</span>
-
-  </div>
-
-  <div class="cirqua-identity__item">
-
-    <span class="cirqua-identity__label">Physical role</span>
-
-    <span class="cirqua-identity__value">Effluent water-quality station: pH, turbidity, electrical conductivity, submerged and ambient temperature, effluent level (TCV)</span>
-
-  </div>
-
-  <div class="cirqua-identity__item">
-
-    <span class="cirqua-identity__label">Firmware variant</span>
-
-    <span class="cirqua-identity__value">FreeRTOS_Implementation/Node4 <span class="cirqua-badge cirqua-badge--current">Current</span></span>
-
-  </div>
-
-  <div class="cirqua-identity__item">
-
-    <span class="cirqua-identity__label">Firmware commit</span>
-
-    <span class="cirqua-identity__value"><code>db6d9b8</code></span>
-
-  </div>
-
-  <div class="cirqua-identity__item">
-
-    <span class="cirqua-identity__label">Firmware file</span>
-
-    <span class="cirqua-identity__value"><code>FreeRTOS_Implementation/Node4/Node4.ino</code></span>
-
-  </div>
-
-  <div class="cirqua-identity__item">
-
-    <span class="cirqua-identity__label">Controller</span>
-
-    <span class="cirqua-identity__value">ESP32</span>
-
-  </div>
-
-  <div class="cirqua-identity__item">
-
-    <span class="cirqua-identity__label">Hardware revision</span>
-
-    <span class="cirqua-identity__value">Not verified from the current source.</span>
-
-  </div>
-
-</div>
-
-!!! note "There are two Node 4 firmwares"
-
-    This page documents `Node4`. The [Node 4 SMTP variant](node4-smtp.md) uses
-
-    the same sensors and pins but different default calibration, different EC
-
-    units, different downstream field names and **no calibration console**. Read
-
-    both pages before working on a water-quality enclosure.
+--8<-- "assets/generated/node-cards/node4.html"
 
 ## Responsibilities
 

@@ -1,0 +1,634 @@
+/* ==========================================================================
+   CIRQUA documentation - upgrade components
+   --------------------------------------------------------------------------
+   Added by the documentation audit. Kept separate from extra.css so the
+   established visual system is preserved and this layer stays reviewable.
+
+   Design constraints:
+     - White first. No dark theme.
+     - Status is never conveyed by colour alone: every badge carries an icon
+       glyph and a text label.
+     - No motion beyond a short hover transition, and none at all under
+       prefers-reduced-motion.
+     - Mobile safe: the node card and revision bar reflow to one column and
+       wide tables scroll rather than overflow.
+   ========================================================================== */
+
+:root {
+  --cirqua-vfy-verified: #17663a;
+  --cirqua-vfy-verified-bg: #e9f6ee;
+  --cirqua-vfy-partial: #8a5200;
+  --cirqua-vfy-partial-bg: #fdf6dd;
+  --cirqua-vfy-unverified: #a41f24;
+  --cirqua-vfy-unverified-bg: #fdeaea;
+  --cirqua-vfy-historical: #6b3f00;
+  --cirqua-vfy-historical-bg: #fbeedd;
+  --cirqua-vfy-inferred: #5b4a8a;
+  --cirqua-vfy-inferred-bg: #f0ecfa;
+  --cirqua-vfy-hardware: #a1450a;
+  --cirqua-vfy-hardware-bg: #fdefe3;
+}
+
+/* ==========================================================================
+   Verification badges
+   ========================================================================== */
+
+.cirqua-vfy {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.05rem 0.45rem 0.05rem 0.35rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.cirqua-vfy__icon {
+  font-size: 0.68rem;
+  line-height: 1;
+}
+
+.cirqua-vfy--verified { color: var(--cirqua-vfy-verified); background: var(--cirqua-vfy-verified-bg); }
+.cirqua-vfy--partial { color: var(--cirqua-vfy-partial); background: var(--cirqua-vfy-partial-bg); }
+.cirqua-vfy--unverified { color: var(--cirqua-vfy-unverified); background: var(--cirqua-vfy-unverified-bg); }
+.cirqua-vfy--historical { color: var(--cirqua-vfy-historical); background: var(--cirqua-vfy-historical-bg); }
+.cirqua-vfy--inferred { color: var(--cirqua-vfy-inferred); background: var(--cirqua-vfy-inferred-bg); }
+.cirqua-vfy--hardware { color: var(--cirqua-vfy-hardware); background: var(--cirqua-vfy-hardware-bg); }
+
+.cirqua-muted {
+  color: var(--cirqua-default-fg-color--light, #45566b);
+  font-weight: 400;
+}
+
+/* ==========================================================================
+   Node identity card
+   ========================================================================== */
+
+.cirqua-nodecard {
+  border: 1px solid var(--cirqua-border);
+  border-top: 3px solid var(--cirqua-blue-deep);
+  border-radius: var(--cirqua-radius-lg, 10px);
+  background: var(--cirqua-white);
+  margin: 1.25rem 0 1.75rem;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(10, 5, 27, 0.05);
+}
+
+.cirqua-nodecard__head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding: 0.7rem 1rem;
+  background: var(--cirqua-blue-soft, #eaf2fd);
+  border-bottom: 1px solid var(--cirqua-border-soft, #e6ecf5);
+}
+
+.cirqua-nodecard__number {
+  font-family: var(--cirqua-mono);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--cirqua-blue-deep);
+  letter-spacing: 0.06em;
+}
+
+.cirqua-nodecard__name {
+  font-size: 0.76rem;
+  color: var(--cirqua-blue);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.cirqua-nodecard__grid {
+  display: grid;
+  grid-template-columns: minmax(9rem, max-content) 1fr;
+  gap: 0.3rem 1rem;
+  margin: 0;
+  padding: 0.9rem 1rem;
+  font-size: 0.75rem;
+}
+
+.cirqua-nodecard__grid dt {
+  font-weight: 700;
+  color: var(--cirqua-blue-deep);
+  letter-spacing: 0.02em;
+}
+
+.cirqua-nodecard__grid dd {
+  margin: 0;
+  color: var(--cirqua-ink);
+  line-height: 1.55;
+}
+
+.cirqua-nodecard__grid code {
+  font-size: 0.7rem;
+  background: var(--cirqua-surface, #f7f9fc);
+  padding: 0.05rem 0.3rem;
+  border-radius: 3px;
+}
+
+.cirqua-nodecard__verify {
+  border-top: 1px solid var(--cirqua-border-soft, #e6ecf5);
+  padding: 0.85rem 1rem 1rem;
+  background: var(--cirqua-surface, #f7f9fc);
+}
+
+.cirqua-nodecard__verifytitle {
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cirqua-blue-deep);
+  margin: 0 0 0.5rem;
+  font-weight: 700;
+}
+
+.cirqua-nodecard__overall {
+  font-size: 0.74rem;
+  margin: 0 0 0.6rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.cirqua-nodecard__footer {
+  font-size: 0.66rem;
+  color: var(--cirqua-default-fg-color--light, #45566b);
+  margin: 0.6rem 0 0;
+}
+
+.cirqua-card-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.68rem;
+  background: var(--cirqua-white);
+  border: 1px solid var(--cirqua-border-soft, #e6ecf5);
+  border-radius: var(--cirqua-radius, 6px);
+  display: table;
+}
+
+.cirqua-card-table th {
+  background: var(--cirqua-white);
+  text-align: left;
+  padding: 0.3rem 0.5rem;
+  font-weight: 700;
+  color: var(--cirqua-blue-deep);
+  border-bottom: 1px solid var(--cirqua-border, #d6e0ee);
+  white-space: nowrap;
+}
+
+.cirqua-card-table td {
+  padding: 0.28rem 0.5rem;
+  border-bottom: 1px solid var(--cirqua-border-soft, #e6ecf5);
+  vertical-align: middle;
+}
+
+.cirqua-card-table tr:last-child td { border-bottom: none; }
+.cirqua-card-table__cat { color: var(--cirqua-default-fg-color--light, #45566b); }
+
+@media screen and (max-width: 44.9844em) {
+  .cirqua-nodecard__grid {
+    grid-template-columns: 1fr;
+    gap: 0.1rem;
+  }
+  .cirqua-nodecard__grid dt {
+    margin-top: 0.45rem;
+  }
+}
+
+/* ==========================================================================
+   Revision bar
+   ========================================================================== */
+
+.cirqua-revbar {
+  border: 1px solid var(--cirqua-border);
+  border-radius: var(--cirqua-radius-lg, 10px);
+  background: var(--cirqua-white);
+  margin: 1.25rem 0 1.75rem;
+  overflow: hidden;
+}
+
+.cirqua-revbar__brand {
+  padding: 0.6rem 1rem;
+  background: var(--cirqua-blue-deep);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.cirqua-revbar__brand span {
+  font-weight: 400;
+  opacity: 0.8;
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
+.cirqua-revbar__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 0.75rem 1.25rem;
+  margin: 0;
+  padding: 0.85rem 1rem 0.5rem;
+}
+
+.cirqua-revbar__grid dt {
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cirqua-default-fg-color--lighter, #64748b);
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+
+.cirqua-revbar__grid dd {
+  margin: 0;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--cirqua-ink);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.cirqua-revbar__note {
+  font-size: 0.7rem;
+  color: var(--cirqua-default-fg-color--light, #45566b);
+  margin: 0;
+  padding: 0.6rem 1rem 0.85rem;
+  border-top: 1px solid var(--cirqua-border-soft, #e6ecf5);
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   Interactive system explorer
+   ========================================================================== */
+
+.cirqua-explorer {
+  border: 1px solid var(--cirqua-border);
+  border-radius: var(--cirqua-radius-lg, 10px);
+  background: var(--cirqua-white);
+  margin: 1.5rem 0 2rem;
+  overflow: hidden;
+}
+
+.cirqua-explorer__chain {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+  gap: 0.5rem;
+  padding: 1.1rem 1rem;
+  background: var(--cirqua-surface, #f7f9fc);
+  border-bottom: 1px solid var(--cirqua-border);
+  position: relative;
+}
+
+.cirqua-explorer__link {
+  display: block;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  border: 1px solid var(--cirqua-blue-line, #c9dcf7);
+  border-radius: var(--cirqua-radius, 6px);
+  background: var(--cirqua-white);
+  padding: 0.55rem 0.65rem;
+  font: inherit;
+  color: inherit;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.cirqua-explorer__link:hover,
+.cirqua-explorer__link:focus-visible {
+  border-color: var(--cirqua-blue-deep);
+  box-shadow: 0 3px 10px rgba(7, 42, 146, 0.12);
+  transform: translateY(-1px);
+}
+
+.cirqua-explorer__link[aria-pressed='true'] {
+  border-color: var(--cirqua-blue-deep);
+  background: var(--cirqua-blue-soft, #eaf2fd);
+  box-shadow: inset 3px 0 0 var(--cirqua-blue-deep);
+}
+
+.cirqua-explorer__num {
+  display: block;
+  font-family: var(--cirqua-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  color: var(--cirqua-blue);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.cirqua-explorer__name {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--cirqua-blue-deep);
+  margin-top: 0.1rem;
+}
+
+.cirqua-explorer__meas {
+  display: block;
+  font-size: 0.64rem;
+  color: var(--cirqua-default-fg-color--light, #45566b);
+  margin-top: 0.2rem;
+  line-height: 1.4;
+}
+
+.cirqua-explorer__arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.62rem;
+  color: var(--cirqua-default-fg-color--lighter, #64748b);
+  letter-spacing: 0.04em;
+  padding-bottom: 0.2rem;
+}
+
+.cirqua-explorer__detail {
+  padding: 1rem;
+  border-top: 1px solid var(--cirqua-border-soft, #e6ecf5);
+}
+
+.cirqua-explorer__detail h3 {
+  margin: 0 0 0.15rem;
+  font-size: 1rem;
+  color: var(--cirqua-blue-deep);
+}
+
+.cirqua-explorer__purpose {
+  font-size: 0.78rem;
+  color: var(--cirqua-default-fg-color--light, #45566b);
+  margin: 0 0 0.7rem;
+}
+
+.cirqua-explorer__facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 0.55rem 1.25rem;
+  margin: 0 0 0.8rem;
+  font-size: 0.72rem;
+}
+
+.cirqua-explorer__facts dt {
+  font-size: 0.58rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--cirqua-default-fg-color--lighter, #64748b);
+  font-weight: 700;
+}
+
+.cirqua-explorer__facts dd {
+  margin: 0.1rem 0 0;
+  color: var(--cirqua-ink);
+  line-height: 1.5;
+}
+
+.cirqua-explorer__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  font-size: 0.7rem;
+}
+
+.cirqua-explorer__actions a {
+  display: inline-block;
+  padding: 0.22rem 0.6rem;
+  border: 1px solid var(--cirqua-blue-line, #c9dcf7);
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--cirqua-blue-deep);
+  background: var(--cirqua-white);
+  font-weight: 600;
+}
+
+.cirqua-explorer__actions a:hover {
+  background: var(--cirqua-blue-soft, #eaf2fd);
+  border-color: var(--cirqua-blue-deep);
+}
+
+.cirqua-explorer__legend {
+  font-size: 0.66rem;
+  color: var(--cirqua-default-fg-color--light, #45566b);
+  padding: 0.5rem 1rem 0.75rem;
+  border-top: 1px solid var(--cirqua-border-soft, #e6ecf5);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   Homepage hero - restrained, technical, not a marketing banner
+   ========================================================================== */
+
+.cirqua-hero {
+  border: 1px solid var(--cirqua-border);
+  border-radius: var(--cirqua-radius-lg, 10px);
+  background: linear-gradient(180deg, #f7f9fc 0%, #ffffff 100%);
+  padding: 1.6rem 1.5rem;
+  margin: 0 0 1.75rem;
+}
+
+.cirqua-hero__eyebrow {
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cirqua-blue);
+  font-weight: 700;
+  margin: 0 0 0.4rem;
+}
+
+.cirqua-hero__title {
+  font-size: 2.1rem;
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--cirqua-blue-deep);
+  margin: 0 0 0.3rem;
+}
+
+.cirqua-hero__sub {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--cirqua-navy);
+  margin: 0 0 0.7rem;
+}
+
+.cirqua-hero__lead {
+  font-size: 0.84rem;
+  line-height: 1.65;
+  color: var(--cirqua-default-fg-color--light, #45566b);
+  max-width: 46rem;
+  margin: 0 0 1rem;
+}
+
+.cirqua-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.cirqua-hero__btn {
+  display: inline-block;
+  padding: 0.42rem 0.95rem;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  border: 1px solid var(--cirqua-blue-deep);
+}
+
+.cirqua-hero__btn--primary {
+  background: var(--cirqua-blue-deep);
+  color: #ffffff;
+}
+
+.cirqua-hero__btn--primary:hover {
+  background: #0b34a8;
+}
+
+.cirqua-hero__btn--ghost {
+  background: var(--cirqua-white);
+  color: var(--cirqua-blue-deep);
+}
+
+.cirqua-hero__btn--ghost:hover {
+  background: var(--cirqua-blue-soft, #eaf2fd);
+}
+
+@media screen and (max-width: 44.9844em) {
+  .cirqua-hero { padding: 1.15rem 1rem; }
+  .cirqua-hero__title { font-size: 1.6rem; }
+  .cirqua-hero__sub { font-size: 0.86rem; }
+}
+
+/* ==========================================================================
+   Section heading + node cards on the homepage
+   ========================================================================== */
+
+.cirqua-nodecards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 0.75rem;
+  margin: 1rem 0 2rem;
+}
+
+.cirqua-nodecard-tile {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--cirqua-border);
+  border-radius: var(--cirqua-radius, 6px);
+  padding: 0.8rem 0.9rem;
+  background: var(--cirqua-white);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.cirqua-nodecard-tile:hover {
+  border-color: var(--cirqua-blue-deep);
+  box-shadow: 0 4px 14px rgba(7, 42, 146, 0.1);
+  transform: translateY(-2px);
+}
+
+.cirqua-nodecard-tile__num {
+  font-family: var(--cirqua-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  color: var(--cirqua-blue);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.cirqua-nodecard-tile__name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--cirqua-blue-deep);
+  margin: 0.1rem 0 0.25rem;
+}
+
+.cirqua-nodecard-tile__body {
+  font-size: 0.72rem;
+  line-height: 1.5;
+  color: var(--cirqua-default-fg-color--light, #45566b);
+  flex: 1 1 auto;
+}
+
+.cirqua-nodecard-tile__foot {
+  font-size: 0.62rem;
+  margin-top: 0.5rem;
+  padding-top: 0.4rem;
+  border-top: 1px solid var(--cirqua-border-soft, #e6ecf5);
+  color: var(--cirqua-blue);
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* ==========================================================================
+   Photo placeholders - explicit, never disguised as real hardware
+   ========================================================================== */
+
+.cirqua-photo-slot {
+  border: 2px dashed var(--cirqua-border);
+  border-radius: var(--cirqua-radius, 6px);
+  background: var(--cirqua-surface, #f7f9fc);
+  padding: 1.1rem 1rem;
+  text-align: center;
+  margin: 0.75rem 0 1.25rem;
+}
+
+.cirqua-photo-slot__label {
+  display: inline-block;
+  font-family: var(--cirqua-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--cirqua-warn, #8a5200);
+  background: var(--cirqua-vfy-partial-bg);
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  padding: 0.1rem 0.55rem;
+  margin-bottom: 0.5rem;
+}
+
+.cirqua-photo-slot__title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--cirqua-blue-deep);
+  margin: 0 0 0.25rem;
+}
+
+.cirqua-photo-slot__note {
+  font-size: 0.72rem;
+  color: var(--cirqua-default-fg-color--light, #45566b);
+  margin: 0;
+  max-width: 34rem;
+  margin-inline: auto;
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   Reduced motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .cirqua-explorer__link,
+  .cirqua-nodecard-tile {
+    transition: none;
+  }
+  .cirqua-explorer__link:hover,
+  .cirqua-nodecard-tile:hover {
+    transform: none;
+  }
+}

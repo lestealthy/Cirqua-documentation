@@ -1,0 +1,252 @@
+# CIRQUA documentation - verification declaration
+#
+# This file declares, for each area of the system, how far the documentation
+# has actually been verified and what evidence supports that claim.
+#
+# It exists so that verification status is a declared, reviewable fact rather
+# than an impression. The generated identity cards and revision bars read this
+# file; they never infer status.
+#
+# ---------------------------------------------------------------------------
+# Claim categories (see docs/references/index.md for the full model)
+# ---------------------------------------------------------------------------
+#   MANUFACTURER_FACT          supported by an official datasheet or product page
+#   SCIENTIFIC_FACT            supported by peer-reviewed or institutional literature
+#   FIRMWARE_FACT              demonstrated directly by the pinned source code
+#   PROJECT_OBSERVATION        directly observed during CIRQUA testing
+#   WATTLAB_INTERPRETATION     engineering reasoning by WattLab, not a source claim
+#
+# ---------------------------------------------------------------------------
+# Verification states
+# ---------------------------------------------------------------------------
+#   VERIFIED                   audited against the named evidence
+#   PARTIALLY_VERIFIED         some part verified, remainder explicitly unknown
+#   NOT_VERIFIED               no evidence available; recorded as unknown
+#   HISTORICAL                 describes a superseded implementation
+#   INFERRED                   concluded from evidence, not directly stated by it
+#   REQUIRES_HARDWARE_TEST     cannot be settled from source alone
+# ---------------------------------------------------------------------------
+
+meta:
+  firmware_repository: https://github.com/lestealthy/Cirqua
+  firmware_branch: main
+  firmware_commit: db6d9b896341a9c7d8fd01913e854b663c110d55
+  firmware_commit_short: db6d9b8
+
+  # The single most important caveat about this documentation. It is stated
+  # globally because it applies to every hardware claim below.
+  hardware_test_evidence_available: false
+  global_caveat: >-
+    No hardware test log, bench record or commissioning report is present in
+    the firmware repository or the WattLab documentation workspace. Every
+    hardware statement in this documentation is therefore either derived from
+    firmware source or explicitly marked as requiring a hardware test.
+
+# ---------------------------------------------------------------------------
+# Per-area declaration
+# ---------------------------------------------------------------------------
+areas:
+
+  gpio_assignments:
+    state: VERIFIED
+    category: FIRMWARE_FACT
+    evidence: >-
+      Every GPIO quoted in the documentation is read from a #define in the
+      named sketch at the pinned commit, and re-checked on every build by
+      scripts/audit_truth.py.
+    note: >-
+      Source-verified only. Physical wiring has not been independently
+      re-verified against a board.
+
+  free_rtos_tasks:
+    state: VERIFIED
+    category: FIRMWARE_FACT
+    evidence: >-
+      Task name, stack depth, priority and core pinning are parsed from each
+      xTaskCreatePinnedToCore call and compared against the documented task
+      tables on every build.
+
+  serial_protocol:
+    state: VERIFIED
+    category: FIRMWARE_FACT
+    evidence: >-
+      Frame format, delimiters, baud rate, buffer sizes and the real snprintf
+      format strings are taken from the pinned source. The absence of a
+      checksum, sequence number, acknowledgement or retry is itself verified
+      by reading the send and receive paths.
+
+  calibration_constants:
+    state: VERIFIED
+    category: FIRMWARE_FACT
+    evidence: >-
+      Geometry, calibration and conversion constants are re-derived from the
+      sketches and compared against the documented values by
+      scripts/audit_truth.py.
+    note: >-
+      Verified as the values the firmware uses. This says nothing about
+      whether those values are correct for a particular installation.
+
+  ph_calibration_procedure:
+    state: PARTIALLY_VERIFIED
+    category: FIRMWARE_FACT
+    evidence: >-
+      The console commands, NVS namespace, keys and persistence behaviour are
+      read from the source and are verified.
+    unknown: >-
+      No record exists of the procedure having been executed against a real
+      pH electrode to produce a known-good result.
+
+  ec_calibration_procedure:
+    state: PARTIALLY_VERIFIED
+    category: FIRMWARE_FACT
+    evidence: Console commands and the K-factor model are verified from source.
+    unknown: >-
+      No record of a K-factor determination against a certified standard
+      solution.
+
+  dissolved_oxygen_model:
+    state: PARTIALLY_VERIFIED
+    category: WATTLAB_INTERPRETATION
+    evidence: >-
+      The arithmetic of the conversion is verified against the source.
+    unknown: >-
+      The -2 %/degC temperature coefficient is a linear approximation and has
+      not been compared against measured air-saturation data. The sensor
+      module has no part number recorded.
+
+  turbidity_curve:
+    state: PARTIALLY_VERIFIED
+    category: MANUFACTURER_FACT
+    evidence: >-
+      The polynomial and the piecewise thresholds are implemented exactly as
+      the firmware defines them, and the firmware attributes the relationship
+      to SEN0189 / DFRobot.
+    unknown: >-
+      The manufacturer datasheet for the attributed part has not been
+      obtained, so the curve's suitability for this installation is not
+      confirmed. Treat the coefficients as firmware values, not as a validated
+      calibration.
+
+  flow_calibration_factor:
+    state: NOT_VERIFIED
+    category: FIRMWARE_FACT
+    evidence: The literal 5.5 pulses per litre is verified as the firmware value.
+    unknown: >-
+      No part number, no manufacturer datasheet and no volumetric test record.
+      The factor must be confirmed per installation before the flow rate is
+      trusted.
+
+  ultrasonic_tank_geometry:
+    state: PARTIALLY_VERIFIED
+    category: FIRMWARE_FACT
+    evidence: Geometry constants and the conversion formula are verified from source.
+    unknown: >-
+      Physical tank dimensions and the sensor mounting offset have not been
+      measured. The Node 1 volume doubling factor has no documented physical
+      justification.
+
+  lcd_behaviour:
+    state: VERIFIED
+    category: FIRMWARE_FACT
+    evidence: >-
+      Display text, row addresses and the Node 1 status-string precedence are
+      read from the source and reproduced exactly.
+
+  node_topology:
+    state: VERIFIED
+    category: FIRMWARE_FACT
+    evidence: >-
+      Topology and link direction are derived from the UART pin assignments
+      and the send/receive paths in each sketch.
+    unknown: >-
+      The downstream controller's implementation is not present in the current
+      firmware tree, so the receiving end of the final link is unverified.
+
+  downsteam_controller:
+    state: NOT_VERIFIED
+    category: FIRMWARE_FACT
+    evidence: >-
+      Node 4 forwards frames to a controller commented "To Controller (Mega)".
+      The only controller source in the repository is archived under _OLD/.
+    unknown: >-
+      The active controller firmware, its expected frame contract and its
+      current revision are all unverified.
+
+  hardware_revision:
+    state: NOT_VERIFIED
+    category: FIRMWARE_FACT
+    evidence: >-
+      No hardware revision, bill of materials or schematic exists anywhere in
+      the repositories or the local workspace.
+    unknown: >-
+      Hardware revision is recorded as NOT RECORDED on every node. No revision
+      is invented.
+
+  schematics_and_wiring:
+    state: NOT_VERIFIED
+    category: FIRMWARE_FACT
+    evidence: >-
+      No schematic, PCB file, wiring diagram or connector pinout exists in the
+      repositories or on the local machine.
+    unknown: >-
+      Field wiring must be derived from the GPIO tables. No diagram is
+      published because none exists.
+
+  hardware_photography:
+    state: NOT_VERIFIED
+    category: PROJECT_OBSERVATION
+    evidence: >-
+      No photograph of CIRQUA hardware was found on the local machine.
+    unknown: >-
+      Photo slots on node pages are explicit placeholders. No stock or
+      generated image is presented as CIRQUA hardware.
+
+  power_distribution:
+    state: NOT_VERIFIED
+    category: FIRMWARE_FACT
+    evidence: >-
+      Only what the firmware comments imply is recorded: a note that sensor
+      boards may be powered from 5 V while their analogue output must remain
+      within the ESP32 ADC input range.
+    unknown: >-
+      Supply voltage, current budget, regulator part numbers, battery capacity
+      and any solar or mains topology are all unrecorded.
+
+  sensor_part_numbers:
+    state: NOT_VERIFIED
+    category: MANUFACTURER_FACT
+    evidence: >-
+      HC-SR04, DS18B20 and DHT11 are named in the firmware or its comments.
+      Turbidity is attributed to SEN0189 / DFRobot in a source comment.
+    unknown: >-
+      The dissolved oxygen, flow, pH and conductivity modules have no part
+      number, manufacturer or datasheet anywhere, so no manufacturer
+      specification can be cited for them.
+
+  project_context:
+    state: VERIFIED
+    category: PROJECT_OBSERVATION
+    evidence: >-
+      CIRQUA funding, duration, consortium size and objectives are taken from
+      the official project website and recorded with an access date in
+      sources/sources.yml.
+    note: >-
+      Project facts change. Duration, budget and consortium figures must be
+      re-checked against the official site before external reuse.
+
+  field_deployment:
+    state: NOT_VERIFIED
+    category: PROJECT_OBSERVATION
+    evidence: >-
+      Nothing in either repository records whether any node is installed in
+      the field, or in what configuration.
+
+  maintenance_intervals:
+    state: NOT_VERIFIED
+    category: WATTLAB_INTERPRETATION
+    evidence: >-
+      The maintenance intervals published on the maintenance page are
+      WattLab recommendations, labelled as such on the page.
+    unknown: >-
+      The project has not established an approved schedule, consumable part
+      list or calibration interval.
