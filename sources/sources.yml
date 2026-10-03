@@ -439,3 +439,100 @@ sources:
       main, consumed through the _external/Cirqua-firmware submodule. The
       FreeRTOS_Implementation tree is current; _OLD is historical and is
       never treated as the current architecture.
+
+  # ---------------------------------------------------------------------
+  # Obtained during the 2026-10-04 documentation audit
+  # ---------------------------------------------------------------------
+  - id: DFROBOT_SEN0189_WIKI
+    title: 'Gravity: Analog Turbidity Sensor (SKU: SEN0189)'
+    publisher: DFRobot
+    source_type: manufacturer
+    url: https://wiki.dfrobot.com/sen0189
+    accessed: '2026-10-04'
+    used_for:
+      - operating voltage (5 V DC) and maximum current (40 mA) of the turbidity
+        module the firmware attributes to SEN0189 / DFRobot
+      - analog output range of 0 to 4.5 V
+      - the operating temperature range of 5 to 90 degrees C
+      - the manufacturer's statement that the top of the probe is not
+        waterproof
+      - the reference point that pure water below 0.5 NTU outputs
+        4.1 +/- 0.3 V at 10 to 50 degrees C
+      - the fact that the voltage to NTU relationship is temperature dependent
+    authority: official
+    notes: >-
+      This is the official manufacturer wiki for the part named in the Node 4
+      firmware comment. It supplies the manufacturer specification that the
+      CIRQUA implementation section can be compared against.
+
+  - id: DFROBOT_SEN0189_ANALOG
+    title: 'Gravity: Analog Turbidity Sensor for Arduino - Example Code for Analog Output'
+    publisher: DFRobot
+    source_type: manufacturer
+    url: https://wiki.dfrobot.com/sen0189/docs/18001
+    accessed: '2026-10-04'
+    used_for:
+      - confirmation that the analog output decreases as turbidity increases,
+        which is the direction the CIRQUA firmware implements
+      - the manufacturer's own Arduino example, which scales the reading as a
+        5 V input on a 10-bit ADC, confirming the module is designed for 5 V
+        analogue signals rather than 3.3 V
+      - the voltage to NTU reference chart, which the manufacturer publishes
+        as a temperature dependent curve rather than as a closed-form
+        polynomial
+      - the equivalence 1 JTU = 1 NTU = 1 mg/L
+    authority: official
+    notes: >-
+      The manufacturer publishes a reference curve, not an equation. The
+      quadratic used by the firmware is therefore an empirical fit and must not
+      be presented as a datasheet relationship.
+
+  - id: DFROBOT_TURBIDITY_PRODUCT
+    title: 'Gravity: Analog Turbidity Sensor for Arduino'
+    publisher: DFRobot
+    source_type: manufacturer
+    url: https://www.dfrobot.com/product-1394.html
+    accessed: '2026-10-04'
+    used_for:
+      - the commercial product listing corresponding to the SEN0189 wiki, used
+        to confirm the part identity
+    authority: official
+    notes: >-
+      Recorded for part identity only. Note that DFRobot product URL
+      identifiers are re-used over time: product-1385.html now resolves to
+      SEN0193, a soil moisture sensor, and must not be cited for SEN0189.
+
+  - id: ESPRESSIF_ARDUINO_ADC
+    title: 'Arduino-ESP32 ADC API'
+    publisher: Espressif Systems
+    source_type: manufacturer
+    url: https://docs.espressif.com/projects/arduino-esp32/en/latest/api/adc.html
+    accessed: '2026-10-04'
+    used_for:
+      - the measurable input voltage range for each ADC attenuation setting on
+        the ESP32, and specifically that ADC_11db measures 150 mV to 3100 mV
+      - confirmation that analogRead returns an uncalibrated raw count while
+        analogReadMilliVolts returns a calibrated millivolt value, which is
+        what Node 4 uses
+      - confirmation that the default ADC resolution is 12 bits
+    authority: official
+    notes: >-
+      This is the specification that establishes the ESP32 ADC ceiling against
+      which the 0 to 4.5 V SEN0189 output range can be compared.
+
+  - id: DFROBOT_GRAVITY_WATER_FAMILY
+    title: 'DFRobot Gravity water-quality sensor family (pH, EC, dissolved oxygen)'
+    publisher: DFRobot
+    source_type: manufacturer
+    url: https://wiki.dfrobot.com/
+    accessed: '2026-10-04'
+    used_for:
+      - candidate replacement parts for the Node 2 dissolved oxygen module and
+        the Node 4 pH and conductivity modules, whose own part numbers are not
+        recorded anywhere in the firmware
+    authority: official
+    notes: >-
+      Recorded ONLY as candidate replacements for field service. It is NOT
+      established that these are the parts fitted to CIRQUA hardware. The
+      dissolved oxygen, pH and conductivity modules remain unidentified, and
+      no specification from this family is cited as a CIRQUA requirement.

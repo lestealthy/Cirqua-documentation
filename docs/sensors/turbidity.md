@@ -41,6 +41,87 @@ SEN0189 / DFRobot.
   </div>
 </div>
 
+## Manufacturer specification
+
+The Node 4 firmware attributes its turbidity relationship to **SEN0189 / DFRobot**
+in a source comment. The following is the manufacturer specification for that part,
+taken from the official DFRobot documentation and recorded with an access date in
+[the source registry](../references/source-registry.md). It is stated separately
+from the CIRQUA implementation below because **the two do not agree on the voltage
+range**.
+
+| Parameter | Manufacturer value |
+|---|---|
+| Operating voltage | 5 V DC |
+| Operating current | 40 mA maximum |
+| Analogue output | 0 – 4.5 V |
+| Digital output | High/low level, threshold set by an on-board potentiometer |
+| Response time | < 500 ms |
+| Operating temperature | 5 °C to 90 °C |
+| Storage temperature | −10 °C to 90 °C |
+| Waterproofing | Top of probe is **not** waterproof |
+
+Two further manufacturer statements matter for the firmware:
+
+* the analogue output **decreases** as turbidity increases — the direction the
+  CIRQUA firmware implements is therefore correct;
+* in pure water, below 0.5 NTU, the manufacturer states the sensor outputs
+  **4.1 ± 0.3 V** at 10–50 °C.
+
+!!! warning "The manufacturer publishes a curve, not an equation"
+    DFRobot documents the voltage-to-NTU relationship as a **reference chart that
+    varies with temperature**. It does not publish the quadratic used by the
+    CIRQUA firmware. The polynomial in the source must therefore be treated as an
+    empirical fit and **not** quoted as a datasheet relationship.
+
+### The voltage range does not fit
+
+This is the most important finding in this page, and it is a conflict between two
+manufacturer specifications and the firmware as written.
+
+| | Value | Source |
+|---|---|---|
+| Sensor analogue output | 0 – 4.5 V | DFRobot SEN0189 |
+| Sensor output for clear water (< 0.5 NTU) | 4.1 ± 0.3 V | DFRobot SEN0189 |
+| ESP32 ADC measurable input at `ADC_11db` | 150 mV – **3100 mV** | Espressif ADC documentation |
+| Attenuation selected by the firmware | `ADC_11db` | `Node4.ino` |
+| Firmware validity window | `0.0 <= V <= 3.30` | `Node4.ino` |
+| Firmware zero-turbidity branch | `V >= 3.20 → 0 NTU` | `Node4.ino` |
+
+**Manufacturer fact.** The module drives up to 4.5 V, and outputs about 4.1 V in
+clear water.
+
+**Manufacturer fact.** With the attenuation the firmware selects, the ESP32 ADC can
+only measure up to 3100 mV.
+
+**WattLab engineering interpretation.** Three consequences follow, and they
+compound:
+
+1. The top of the sensor's output span — roughly 3.1 V to 4.5 V — lies outside the
+   ESP32's measurable input range with `ADC_11db`. Those voltages cannot be read
+   faithfully.
+2. The clear-water reference point of 4.1 ± 0.3 V is above that ceiling. In clear
+   water the signal is out of range, and the firmware's own validity window
+   (`V <= 3.30`) rejects it as invalid. **The best-case water condition is the one
+   condition reported as a sensor fault.**
+3. The firmware's `ntu = 0.0f` branch requires `V >= 3.20`, which is above both the
+   3100 mV ADC ceiling and the 3100 mV point Espressif specifies. Under the
+   configured attenuation that branch is **effectively unreachable**, so the
+   conversion never returns 0 NTU from the quadratic path.
+
+!!! danger "Requires a hardware check before this channel is trusted"
+    If external attenuation is fitted — a resistive divider or similar — that is
+    not recorded anywhere in the firmware or in any wiring document, and it would
+    change every conclusion above. Nothing in the repository shows one.
+    **Confirm on the physical board** what voltage is actually present at GPIO 14
+    with the probe in clear water and in turbid water. Until that is measured, the
+    turbidity channel should be treated as unvalidated.
+
+!!! note "No firmware change is proposed here"
+    This page documents reality. Selecting a different attenuation, fitting a
+    divider, or recalibrating the curve is a hardware and firmware decision for
+    the project, not a documentation change, so none has been made.
+
 ## Purpose and measured quantity
 
 The sensor reports the turbidity of the effluent water at Node 4. The value is:

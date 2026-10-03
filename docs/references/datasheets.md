@@ -253,13 +253,27 @@ The turbidity block in `Node4.ino` (lines 523–532) carries the comment:
 > 5.0 V as the ADC reference. That is incorrect for the ESP32 ADC measurement.
 > The voltage here is the actual voltage measured at the ESP32 ADC input."*
 
-So the source names a specific DFRobot module as the origin of the voltage-to-NTU
-relationship. **The exact DFRobot product page URL for SEN0189 is marked
-unverified** and is deliberately not given here: a specific catalogue URL should
-not be asserted without having confirmed it, and a dead or mismatched link in a
-reference section is worse than an acknowledged gap. Locate it via the
-manufacturer's own catalogue and record the URL, with the access date, in
-[Source Registry](source-registry.md).
+The official manufacturer documentation for that part was located during the
+2026-10-04 audit and is now recorded with access dates in
+[Source Registry](source-registry.md):
+
+| Source | URL |
+|---|---|
+| DFRobot wiki — SEN0189 specification | `https://wiki.dfrobot.com/sen0189` |
+| DFRobot wiki — analogue output example and voltage/NTU reference chart | `https://wiki.dfrobot.com/sen0189/docs/18001` |
+| DFRobot product listing | `https://www.dfrobot.com/product-1394.html` |
+
+!!! warning "A catalogue URL trap worth recording"
+    DFRobot product URL identifiers are re-used. `product-1385.html` now resolves
+    to **SEN0193**, a soil moisture sensor, and must not be cited for SEN0189.
+    The correct listing for the turbidity sensor is `product-1394.html`.
+
+Comparing that specification against the firmware produced a substantive finding,
+documented in full on the [Turbidity](../sensors/turbidity.md) page: the module
+outputs **0–4.5 V** and about **4.1 V in clear water**, while the ESP32 ADC at the
+attenuation the firmware selects measures only **150 mV – 3100 mV**. The clear-water
+condition therefore falls outside the measurable range and outside the firmware's own
+validity window, and the firmware's zero-turbidity branch is unreachable.
 
 Note also that the SMTP variant converts turbidity through an intermediate
 `turbVolt5V = turbVolt * (5.0f / 3.3f)` — reintroducing a 5 V-referred quantity
@@ -281,10 +295,11 @@ A checklist of what would close the gaps on this page. This is a
 | 6 | Manufacturer and model for the flow sensor | To relate `FLOW_CAL_FACTOR 5.5f` to the manufacturer's pulse-per-litre figure | Medium |
 | 7 | Manufacturer and model for the pH probe and amplifier board | To check the two-point model against the board's own output characteristic | Medium |
 | 8 | Manufacturer, model and cell constant for the EC probe | The K-factor of 9.997 has no documented provenance | Medium |
-| 9 | Confirmed DFRobot product page for SEN0189 | To cite the turbidity relationship properly | Medium |
-| 10 | Arduino-ESP32 core version and library versions used for the deployed nodes | Without these, no binary can be reproduced | Medium |
-| 11 | Schematic and wiring diagrams | None exist; wiring is documented only as a GPIO map | Medium |
-| 12 | Cable types, lengths, gauges and connector pinouts | Field service and replacement | Low |
+| 9 | ~~Confirmed DFRobot product page for SEN0189~~ | **Closed 2026-10-04** — official wiki and product listing recorded in the source registry | Closed |
+| 10 | Measured voltage at the turbidity pin (GPIO 14) in clear and in turbid water | The sensor's 0–4.5 V output conflicts with the ESP32 `ADC_11db` range of 150–3100 mV; until measured the channel is unvalidated | **High** |
+| 11 | Arduino-ESP32 core version and library versions used for the deployed nodes | Without these, no binary can be reproduced | Medium |
+| 12 | Schematic and wiring diagrams | None exist; wiring is documented only as a GPIO map | Medium |
+| 13 | Cable types, lengths, gauges and connector pinouts | Field service and replacement | Low |
 | 13 | Enclosure specification, material and mounting heights | Required before any environmental claim can be made | Low |
 | 14 | Controller (Arduino Mega) firmware or its field-name expectations | The external contract that the `FLM` name and the packet cleaner protect | Medium |
 | 15 | Licence file for the firmware repository | Absent; unclear what reuse is permitted | Low |

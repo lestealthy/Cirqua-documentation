@@ -115,17 +115,27 @@ areas:
       module has no part number recorded.
 
   turbidity_curve:
-    state: PARTIALLY_VERIFIED
+    state: REQUIRES_HARDWARE_TEST
     category: MANUFACTURER_FACT
     evidence: >-
       The polynomial and the piecewise thresholds are implemented exactly as
-      the firmware defines them, and the firmware attributes the relationship
-      to SEN0189 / DFRobot.
+      the firmware defines them. The attributed part's official specification
+      was obtained on 2026-10-04: SEN0189 outputs 0-4.5 V and about
+      4.1 +/- 0.3 V in clear water, while Espressif specifies that the ESP32
+      ADC at ADC_11db - the attenuation this firmware selects - measures
+      150 mV to 3100 mV.
+    conflict: >-
+      Two manufacturer specifications conflict with the firmware. The clear-water
+      output of 4.1 V lies above the ADC's measurable ceiling and above the
+      firmware's own 3.30 V validity ceiling, so clear water is rejected as
+      invalid. The zero-turbidity branch requires 3.20 V or more, above the
+      3100 mV ceiling, so it is effectively unreachable. The manufacturer also
+      publishes a temperature-dependent reference chart rather than the
+      polynomial the firmware uses.
     unknown: >-
-      The manufacturer datasheet for the attributed part has not been
-      obtained, so the curve's suitability for this installation is not
-      confirmed. Treat the coefficients as firmware values, not as a validated
-      calibration.
+      No measured voltage at GPIO 14 exists. Whether external attenuation is
+      fitted is not recorded anywhere. Until the pin voltage is measured in
+      clear and in turbid water, this channel cannot be considered validated.
 
   flow_calibration_factor:
     state: NOT_VERIFIED
