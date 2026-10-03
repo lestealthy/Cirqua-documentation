@@ -41,13 +41,43 @@ def git(*args: str, cwd: Path) -> str:
     return result.stdout.strip()
 
 
+def detect_branch(firmware: Path) -> str:
+    """Resolve the canonical branch name of the firmware repository.
+
+    `git rev-parse --abbrev-ref HEAD` returns the literal string "HEAD" when the
+    checkout is detached, which is exactly what a submodule checkout looks like
+    on CI. Recording "HEAD" as the branch would be both wrong and unstable, so a
+    detached checkout is resolved from the remote's symbolic HEAD instead.
+    """
+    name = git("rev-parse", "--abbrev-ref", "HEAD", cwd=firmware)
+    if name and name != "HEAD":
+        return name
+
+    try:
+        result = subprocess.run(
+            ["git", "-C", str(firmware), "ls-remote", "--symref", "origin", "HEAD"],
+            capture_output=True,
+            text=True,
+            check=True,
+        ).stdout
+    except Exception:  # noqa: BLE001
+        return "main"
+
+    for line in result.splitlines():
+        if line.startswith("ref:"):
+            parts = line.split()
+            if len(parts) >= 2:
+                return parts[1].rsplit("/", 1)[-1]
+    return "main"
+
+
 def discover() -> dict:
     firmware = REPO_ROOT / SUBMODULE_PATH
     if not firmware.is_dir():
         sys.exit(f"submodule not initialised at {firmware}")
 
     commit = git("rev-parse", "HEAD", cwd=firmware)
-    branch = git("rev-parse", "--abbrev-ref", "HEAD", cwd=firmware)
+    branch = detect_branch(firmware)
 
     # `git remote -v` prints: <name>\t<url> (fetch)
     remotes = git("remote", "-v", cwd=firmware)

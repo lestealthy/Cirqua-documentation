@@ -48,7 +48,13 @@ def _square_mark(image: Image.Image) -> Image.Image:
     return image.crop((left, top, left + side, top + side))
 
 
-def render(size: int) -> bytes:
+def render(size: int):
+    """Render the icon and return the image (not encoded bytes).
+
+    Callers compare decoded pixels rather than PNG bytes: PNG encoding is not
+    byte-stable across Pillow versions or platforms, so a byte comparison would
+    report a false "stale" result on CI for an identical image.
+    """
     with Image.open(SOURCE) as raw:
         image = raw.convert("RGBA")
         square = _square_mark(image)
@@ -62,10 +68,27 @@ def render(size: int) -> bytes:
             resized,
             ((size - resized.size[0]) // 2, (size - resized.size[1]) // 2),
         )
+        return canvas
 
-        buffer = io.BytesIO()
-        canvas.save(buffer, format="PNG", optimize=True)
-        return buffer.getvalue()
+
+def encode(size: int) -> bytes:
+    buffer = io.BytesIO()
+    render(size).save(buffer, format="PNG", optimize=True)
+    return buffer.getvalue()
+
+
+def same_pixels(path: Path, size: int) -> bool:
+    if not path.is_file():
+        return False
+    try:
+        with Image.open(path) as existing:
+            existing = existing.convert("RGBA")
+            expected = render(size)
+            if existing.size != expected.size:
+                return False
+            return list(existing.getdata()) == list(expected.getdata())
+    except Exception:  # noqa: BLE001
+        return False
 
 
 def main() -> int:
@@ -82,14 +105,13 @@ def main() -> int:
     stale: list[str] = []
     for filename, size in SIZES.items():
         target = BRANDING / filename
-        expected = render(size)
-        if target.is_file() and target.read_bytes() == expected:
+        if same_pixels(target, size):
             print(f"up to date  : {filename} ({size}x{size})")
             continue
         if args.check:
             stale.append(filename)
         else:
-            target.write_bytes(expected)
+            target.write_bytes(encode(size))
             print(f"generated   : {filename} ({size}x{size})")
 
     if args.check:

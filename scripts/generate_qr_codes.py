@@ -81,8 +81,36 @@ def build_qr(url: str):
     return qr.make_image(fill_color="#0A051B", back_color="white")
 
 
-def _png_bytes(url: str) -> bytes:
-    """Deterministic PNG encoding for a QR code, used for drift detection."""
+def _pixels(url: str):
+    """Decoded pixel content for a QR code, used for drift detection.
+
+    Pixel data is compared rather than raw file bytes: PNG encoding is not
+    byte-stable across Pillow versions or platforms, so a byte comparison would
+    report a false "stale" result on CI even when the code is identical.
+    Comparing the decoded image makes the check content-based and reproducible.
+    """
+    return build_qr(url).convert("1")
+
+
+def _same_pixels(path: Path, url: str) -> bool:
+    try:
+        from PIL import Image
+    except ImportError:  # pragma: no cover
+        return path.read_bytes() == _png_bytes_fallback(url)
+    if not path.is_file():
+        return False
+    try:
+        with Image.open(path) as existing:
+            existing = existing.convert("1")
+            expected = _pixels(url)
+            if existing.size != expected.size:
+                return False
+            return list(existing.getdata()) == list(expected.getdata())
+    except Exception:  # noqa: BLE001
+        return False
+
+
+def _png_bytes_fallback(url: str) -> bytes:
     buffer = io.BytesIO()
     build_qr(url).save(buffer, format="PNG", optimize=True)
     return buffer.getvalue()
@@ -105,25 +133,14 @@ def main() -> int:
     for target in TARGETS:
         url = destination(target.slug)
         png_path = QR_DIR / f"qr-{target.key}.png"
-        expected = _png_bytes(url)
 
-        if not png_path.is_file():
-            if args.check:
-                stale.append(f"{target.key} (missing)")
-            else:
-                png_path.write_bytes(expected)
-                written.append(target.key)
+        if _same_pixels(png_path, url):
             continue
 
-        current = png_path.read_bytes()
-
-        if current == expected:
-            continue  # up to date
-
         if args.check:
-            stale.append(target.key)
+            stale.append(f"{target.key} (missing)" if not png_path.is_file() else target.key)
         else:
-            png_path.write_bytes(expected)
+            png_path.write_bytes(_png_bytes_fallback(url))
             written.append(target.key)
 
     # ---- destination manifest for the documentation and CI -------------
