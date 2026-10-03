@@ -77,10 +77,13 @@ plugins:
       minify_css: true
       htmlmin_opts:
         remove_comments: true
+  # NOTE: only options supported by the pinned version
+  # (mkdocs-git-revision-date-plugin 0.3.2) are used here. The `type` and
+  # `strict` options belong to the 1.x line and would abort a strict build.
+  # The plugin is enabled on CI and disabled for local builds so that a
+  # shallow or unpinned local clone cannot fail the build.
   - git-revision-date:
       enabled: !ENV [CI, false]
-      type: date
-      strict: false
 
 markdown_extensions:
   - admonition
