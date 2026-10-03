@@ -703,6 +703,24 @@ a.cirqua-card {
   -webkit-overflow-scrolling: touch;
 }
 
+/* CSS-only fallback so wide tables still scroll on a phone when JavaScript is
+   unavailable. The JS wrapper in extra.js is the primary mechanism; this keeps
+   the page usable without it. `overflow-wrap` keeps cell text readable instead
+   of forcing one very long line. */
+@media screen and (max-width: 44.9844em) {
+  .md-typeset table:not([class]) {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .md-typeset table:not([class]) td,
+  .md-typeset table:not([class]) th {
+    overflow-wrap: anywhere;
+  }
+}
+
 /* ==========================================================================
    Code blocks
    ========================================================================== */
